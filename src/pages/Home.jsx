@@ -5,7 +5,7 @@ const Home = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   if (!token) {
-    return navigate('/');
+    return navigate('/login');
   }
 
   return (
