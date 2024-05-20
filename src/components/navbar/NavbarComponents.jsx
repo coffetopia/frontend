@@ -9,32 +9,48 @@ const NavbarComponents = () => {
           to="/"
           className="w-[100%] md:w-[70%] h-full flex items-center mt-1 ms-2"
         >
-          <img className="flex" src={logo} alt="" />
+          <img className="flex" src={logo} alt="Logo" />
         </NavLink>
       </div>
       <div className="basis-2/4 flex justify-center">
         <div className="items-center bg-[#fff] hidden text-sm sm:flex text-[#591E0A] md:text-lg font-bold">
           <NavLink
             to="/"
-            className="flex items-center px-2 md:px-6 py-2 rounded-xl "
+            className={({ isActive }) =>
+              isActive
+                ? "flex items-center px-2 md:px-6 py-2 rounded-xl text-[#591E0A]"
+                : "flex items-center px-2 md:px-6 py-2 rounded-xl text-[#707070] font-medium"
+            }
           >
             <p>Home</p>
           </NavLink>
           <NavLink
             to="/products"
-            className="flex items-center px-2 md:px-6 py-2 rounded-xl text-[#707070] font-medium"
+            className={({ isActive }) =>
+              isActive
+                ? "flex items-center px-2 md:px-6 py-2 rounded-xl text-[#591E0A]"
+                : "flex items-center px-2 md:px-6 py-2 rounded-xl text-[#707070] font-medium"
+            }
           >
             <p>Products</p>
           </NavLink>
           <NavLink
             to="/checkout"
-            className="flex items-center px-2 md:px-6 py-2 rounded-xl text-[#707070] font-medium"
+            className={({ isActive }) =>
+              isActive
+                ? "flex items-center px-2 md:px-6 py-2 rounded-xl text-[#591E0A]"
+                : "flex items-center px-2 md:px-6 py-2 rounded-xl text-[#707070] font-medium"
+            }
           >
             <p>Checkout</p>
           </NavLink>
           <NavLink
             to="/about"
-            className="flex items-center px-2 md:px-6 py-2 rounded-xl text-[#707070] font-medium"
+            className={({ isActive }) =>
+              isActive
+                ? "flex items-center px-2 md:px-6 py-2 rounded-xl text-[#591E0A]"
+                : "flex items-center px-2 md:px-6 py-2 rounded-xl text-[#707070] font-medium"
+            }
           >
             <p>About</p>
           </NavLink>
