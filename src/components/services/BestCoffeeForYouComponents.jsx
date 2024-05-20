@@ -86,7 +86,7 @@ const BestCoffeeForYouComponents = () => {
             </div>
             <div className="card-content flex flex-col justify-center items-center mt-8">
               <h5 className="text-lg sm:text-2xl mt-10 font-medium">
-                Cappucinno
+                Cappuccino
               </h5>
               <p className="text-base sm:text-lg my-1 font-medium">
                 IDR 25.000
