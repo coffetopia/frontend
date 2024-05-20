@@ -109,7 +109,7 @@ const CustomerComponents = () => {
             </div>
             <div className="name-customer">
               <h5 className="text-xl font-bold">Annisa M</h5>
-              <p className="text-sm">Banjarmasin, Kalsel</p>
+              <p className="text-sm">Banjarmasin, KalSel</p>
             </div>
             <div className="rating-customer flex justify-center items-center h-[30px]">
               <p className="text-base me-1">4.8</p>
