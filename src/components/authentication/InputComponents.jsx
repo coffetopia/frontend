@@ -2,14 +2,8 @@ import { useState } from "react";
 import EYE_IMAGE from "../../assets/eye.png";
 
 export default function InputComponents(props) {
-  const {
-    label,
-    name,
-    type,
-    onChange,
-    isPassword,
-  } = props;
-  
+  const { label, name, type, onChange, isPassword } = props;
+
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -29,7 +23,7 @@ export default function InputComponents(props) {
             id="password"
             name="password"
             type={showPassword ? "text" : "password"}
-            placeholder="Enter Your password"
+            placeholder="Enter your password"
             onChange={onChange}
             className="w-full text-[#321313] py-1 md:py-2 bg-white border border-[#321313] rounded-md p-3 md:p-4  focus:border-indigo-50 "
           />
@@ -45,7 +39,7 @@ export default function InputComponents(props) {
           id={name}
           type={type}
           name={name}
-          placeholder="Enter Your username"
+          placeholder="Enter your username"
           onChange={onChange}
           className="w-full text-[#321313] py-1 md:py-2 bg-white border border-[#321313]   rounded-md p-3 md:p-4  focus:border-indigo-500"
         />
