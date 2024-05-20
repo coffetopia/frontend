@@ -15,21 +15,25 @@ const FooterComponents = () => {
         </NavLink>
         <p className="text-[#707070] text-base sm:text-lg sm:my-2">
           Coffetopia is a store sells some good meals, <br /> and especially
-          coffee. We provide hight quality beans.
+          coffee. We provide high quality beans.
         </p>
         <div className="icon-footer flex my-2">
-          <NavLink
+          <a
             className="eclipse-wa w-[45px] h-[45px] bg-[#321313] rounded-full flex justify-center items-center"
-            to=""
+            href="https://wa.me/+6282314792231"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <img src={iconWa} alt="" width={25} />
-          </NavLink>
-          <NavLink
+            <img src={iconWa} alt="WhatsApp" width={25} />
+          </a>
+          <a
             className="eclipse-ig w-[45px] h-[45px] bg-[#321313] rounded-full flex justify-center items-center ms-2"
-            to=""
+            href="https://www.instagram.com/coffetopia_"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <img src={iconIg} alt="" width={24} />
-          </NavLink>
+            <img src={iconIg} alt="Instagram" width={24} />
+          </a>
         </div>
         <p className="text-[#707070] text-base sm:text-lg my-2">
           (c) 2024 Coffetopia
