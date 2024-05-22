@@ -60,6 +60,7 @@ export default function Login() {
               type={"text"}
               name={"username"}
               onChange={handleChange}
+              placeholder={"enter your username"}
             />
 
             <InputComponents
@@ -68,6 +69,7 @@ export default function Login() {
               name={"password"}
               onChange={handleChange}
               isPassword={true}
+              placeholder={"enter your password"}
             />
 
             <div className="w-full flex items-center justify-between">
