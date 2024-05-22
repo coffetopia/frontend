@@ -12,28 +12,28 @@ export default function Login() {
   const [user, setUser] = useState({
     username: "",
     password: "",
-  });
+  }); // State untuk menyimpan username dan password
 
   const handleChange = (e) => {
     setUser({
       ...user,
       [e.target.name]: e.target.value,
     });
-  };
+  }; // Fungsi untuk mengubah nilai state user ketika input berubah
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Mencegah halaman melakukan refresh ketika form disubmit
     try {
-      const response = await login(user);
-      localStorage.setItem("token", response.payload.token);
-      navigate("/");
+      const response = await login(user); // Coba login
+      localStorage.setItem("token", response.payload.token); // Menyimpan token di localStorage
+      navigate("/"); // Kembali ke Home
     } catch (error) {
       Swal.fire({
         title: "Error!",
         text: "Email atau Password Salah",
         icon: "error",
         confirmButtonText: "Ok",
-      });
+      }); // Menampilkan alert jika login gagal
       console.error("login page", error);
     }
   };

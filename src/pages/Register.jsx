@@ -12,7 +12,7 @@ const Register = () => {
     username: "",
     email: "",
     password: "",
-  });
+  }); // State untuk menyimpan username, email, dan password
 
   const navigate = useNavigate();
   const handleChange = (e) => {
@@ -20,27 +20,27 @@ const Register = () => {
       ...user,
       [e.target.name]: e.target.value,
     });
-  };
+  }; // Fungsi mengubah nilai state user ketika input berubah
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await register(user);
+      const response = await register(user); // Coba registrasi
       Swal.fire({
         title: "Success!",
         text: "User baru berhasil ditambahkan",
         icon: "success",
         confirmButtonText: "Ok",
-      });
+      }); // Menampilkan alert jika registrasi berhasil
       console.log(response);
-      navigate("/login");
+      navigate("/login"); // Setelah user berhasil registrasi, akan dipindahkan ke halaman login
     } catch (error) {
       Swal.fire({
         title: "Error!",
         text: "Email atau Password Salah",
         icon: "error",
         confirmButtonText: "Ok",
-      });
+      }); // Menampilkan alert jika registrasi gagal
       console.error("login page", error);
     }
   };
