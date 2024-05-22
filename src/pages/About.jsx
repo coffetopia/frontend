@@ -1,13 +1,10 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import cafe from "../assets/cafe.png";
 import time from "../assets/jam.jpg";
 import NavbarComponents from "../components/navbar/NavbarComponents"; // Pastikan import path benar
 import BackgroundAbout from "../components/background/BackgroundAbout"; // Pastikan import path benar
 
 const About = () => {
-  const token = localStorage.getItem("token");
-
   return (
     <div className="font-poppins">
       <NavbarComponents /> {/* Tambahkan Navbar di sini */}
@@ -24,8 +21,8 @@ const About = () => {
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold pt-0">
                   Coffeetopia
                 </h1>
-                <p className="text-xs sm:text-sm lg:text-base text-[#321313] font-bold">
-                  Merayakan Kenikmatan Kopi dari Ujung ke Ujung Dunia
+                <p className="text-xs sm:text-sm lg:text-base text-[#321313] font-bold mb-6">
+                Celebrating the Enjoyment of Coffee from End to End of the World
                 </p>
                 <p className="text-xs sm:text-sm lg:text-base text-[#321313] font-bold">
                   Welcome to Coffetopia, your ultimate coffee destination where
@@ -39,25 +36,21 @@ const About = () => {
               </div>
             </div>
             {/* Image section */}
-            <div
-              data-aos="zoom-in"
-              className="order-1 sm:order-2 flex justify-center items-center"
-            >
-              <img
-                src={cafe}
-                alt="Cafe"
-                className="w-[200px] sm:w-[350px] lg:w-[450px] sm:scale-110 m-auto"
-              />
-            </div>
-            <div
-              data-aos="zoom-in"
-              className="order-1 sm:order-2 flex justify-center items-center"
-            >
-              <img
-                src={time}
-                alt="time"
-                className="w-[150px] sm:w-[250px] lg:w-[350px] sm:scale-80 m-auto"
-              />
+            <div className="order-1 sm:order-2 flex flex-col justify-center items-center">
+              <div data-aos="zoom-in">
+                <img
+                  src={cafe}
+                  alt="Cafe"
+                  className="w-[150px] sm:w-[300px] lg:w-[350px] sm:scale-110 m-auto"
+                />
+              </div>
+              <div data-aos="zoom-in" className="mt-4">
+                <img
+                  src={time}
+                  alt="time"
+                  className="w-[150px] sm:w-[250px] lg:w-[350px] sm:scale-80 m-auto"
+                />
+              </div>
             </div>
           </div>
         </div>
