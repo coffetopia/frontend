@@ -6,11 +6,13 @@ import person from "../../assets/person.png";
 const BannerComponents = () => {
   return (
     <div className="flex flex-col bg-[#fff] relative sm:pb-20">
+      {/* Gambar banner */}
       <img src={banner} alt="" />
       <div className="opacity-10 absolute z-5 left-0 right-0 bottom-0 top-0"></div>
       <div className="relative md:absolute z-7 flex justify-center bottom-0 w-full">
         <div className="landing-content rounded-none flex flex-col h-[250px] w-full md:flex-row md:w-[75%] md:h-[170px] bg-[#fff] md:rounded-3xl">
           <div className="basis-1/3 flex ms-20 sm:m-0 sm:justify-center items-center">
+            {/* Menampilkan jumlah staff */}
             <div className="flex justify-center items-center">
               <div className="icon-content relative">
                 <div className="eclipse bg-[#F4991A] w-[40px] h-[40px] sm:w-[65px] sm:h-[65px] rounded-full flex justify-center items-center">
@@ -23,6 +25,7 @@ const BannerComponents = () => {
               </div>
             </div>
           </div>
+          {/* Menampilkan jumlah customer */}
           <div className="basis-1/3 flex ms-20 sm:m-0 sm:justify-between items-center">
             <div className="hidden sm:block line w-[2px] h-[120px] bg-[#D9D9D9]"></div>
             <div className="flex justify-center items-center">
@@ -38,6 +41,7 @@ const BannerComponents = () => {
             </div>
             <div className="hidden sm:block line w-[2px] h-[120px] bg-[#D9D9D9]"></div>
           </div>
+          {/* Menampilkan jumlah toko */}
           <div className="basis-1/3 flex ms-20 sm:m-0 sm:justify-center items-center">
             <div className="flex justify-center items-center">
               <div className="icon-content relative">

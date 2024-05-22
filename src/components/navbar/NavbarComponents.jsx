@@ -5,6 +5,7 @@ const NavbarComponents = () => {
   const token = localStorage.getItem("token");
   return (
     <div className="w-full h-[70px] p-2 flex flex-row">
+      {/* Logo */}
       <div className="basis-2/4 sm:basis-1/4">
         <NavLink
           to="/"
@@ -13,6 +14,8 @@ const NavbarComponents = () => {
           <img className="flex" src={logo} alt="" />
         </NavLink>
       </div>
+
+      {/* Navigasi */}
       <div className="basis-2/4 flex justify-center">
         <div className="items-center bg-[#fff] hidden text-sm sm:flex text-[#707070] md:text-lg font-medium">
           <NavLink
@@ -57,6 +60,8 @@ const NavbarComponents = () => {
           </NavLink>
         </div>
       </div>
+
+      {/* Tombol Autentikasi */}
       <div className="basis-3/4 sm:basis-1/4">
         <div className="flex justify-center items-center font-bold h-full">
           {!token ? (
