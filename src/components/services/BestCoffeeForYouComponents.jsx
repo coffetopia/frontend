@@ -10,6 +10,7 @@ const BestCoffeeForYouComponents = () => {
         Best Coffee For You
       </h2>
       <div className="container-coffee flex flex-col sm:flex-row sm:my-10">
+        {/* Kartu Coffee Late */}
         <div
           className="basis-1/3 py-10 sm:p-0 flex justify-center items-center"
           data-aos="fade-up"
@@ -40,6 +41,7 @@ const BestCoffeeForYouComponents = () => {
             </div>
           </div>
         </div>
+        {/* Kartu Americano */}
         <div
           className="basis-1/3 py-20 sm:p-0 flex justify-center items-center"
           data-aos="fade-up"
@@ -70,6 +72,7 @@ const BestCoffeeForYouComponents = () => {
             </div>
           </div>
         </div>
+        {/* Kartu Cappuccino */}
         <div
           className="basis-1/3 py-10 sm:p-0 flex justify-center items-center"
           data-aos="fade-up"

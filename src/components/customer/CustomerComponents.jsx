@@ -4,6 +4,7 @@ import person from "../../assets/person.png";
 const CustomerComponents = () => {
   return (
     <div className="w-full my-5 sm:my-20">
+      {/* Teks animasi fade-up */}
       <div
         className="text-center py-5 sm:py-10"
         data-aos="fade-up"
@@ -20,6 +21,8 @@ const CustomerComponents = () => {
           pleasure
         </p>
       </div>
+
+      {/* Kontainer kartu review */}
       <div className="container-stories-customer flex flex-wrap justify-center">
         <div
           className="card-stories-customer p-3 w-[330px] h-[250px] border border-[#844934] rounded-xl m-5 flex flex-col"
@@ -31,7 +34,7 @@ const CustomerComponents = () => {
               <img src={person} alt="" width={35} />
             </div>
             <div className="name-customer">
-              <h5 className="text-xl font-bold">Nabilla Filda R</h5>
+              <h5 className="text-xl font-bold">Nabilla Rifda R</h5>
               <p className="text-sm">Tegal, Jawa Tengah</p>
             </div>
             <div className="rating-customer flex justify-center items-center h-[30px]">

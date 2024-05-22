@@ -1,6 +1,7 @@
 import { useState } from "react";
 import EYE_IMAGE from "../../assets/eye.png";
 
+// Komponen InputComponents yang menerima beberapa props
 export default function InputComponents({
   label,
   name,
@@ -10,6 +11,7 @@ export default function InputComponents({
   placeholder,
 }) {
   const [showPassword, setShowPassword] = useState(false);
+  // Fungsi mengubah visibilitas password
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -22,7 +24,7 @@ export default function InputComponents({
       >
         {label}
       </label>
-      {isPassword ? (
+      {isPassword ? ( // Mengecek apakah input adalah password?
         <div className="relative w-full">
           <input
             id={name}
@@ -40,6 +42,7 @@ export default function InputComponents({
           />
         </div>
       ) : (
+        // Jika bukan password, render input biasa
         <input
           id={name}
           type={type}
