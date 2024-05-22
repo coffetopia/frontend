@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavbarComponents from "../components/navbar/NavbarComponents";
 import COFFEE_IMAGE from '../assets/coffe.jpg'; 
 import Buttoncard from "../components/buttoncheckout/Buttoncard";
 import Buttonbank from "../components/buttoncheckout/Buttonbank";
 import Buttoncash from "../components/buttoncheckout/Buttoncash";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
-
-
+import TambahButton from "../components/buttonaction/TambahButton";
+import HapusButton from "../components/buttonaction/HapusButton";
+import EditButton from "../components/buttonaction/EditButton";
+ // Ensure correct import
 
 const Checkout = () => {
     const navigate = useNavigate();
@@ -19,12 +19,19 @@ const Checkout = () => {
         return null;
     }
 
-    const products = [
+    const handleDelete = (index) => {
+        const updatedProducts = [...products];
+        updatedProducts.splice(index, 1);
+        setProducts(updatedProducts);
+      };
+      
+
+      const [products, setProducts] = useState([
         { name: 'Product 1', amount: '1', price: 10000 },
         { name: 'Product 2', amount: '2', price: 20000 },
         { name: 'Product 3', amount: '3', price: 30000 },
-    ];
-
+      ]);
+      
     useEffect(() => {
         const tableBody = document.querySelector('#productTable tbody');
         const totalPriceElement = document.getElementById('totalPrice');
@@ -86,24 +93,19 @@ const Checkout = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {products.map((product, index) => (
-                                            <tr key={index}>
-                                                <td className='p-4'>{product.name}</td>
-                                                <td className='p-4'>{product.amount}</td>
-                                                <td className='p-4'>{`IDR ${product.price.toLocaleString('id-ID')}`}</td>
-                                                <td className='flex justify-around p-4'>
-                                                    <button className='bg-[#F4991A] text-white w-7 h-7 rounded'>
-                                                    <FontAwesomeIcon icon={faPlus} />
-                                                    </button>
-                                                    <button className='bg-[#F41A1A] text-black w-7 h-7 rounded'>
-                                                    <FontAwesomeIcon icon={faTrash} />
-                                                    </button>
-                                                    <button className='bg-[#3fff00] text-black w-7 h-7 rounded'>
-                                                    <FontAwesomeIcon icon={faPencilAlt} />
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                    {products.map((product, index) => (
+                                    <tr key={index}>
+                                        <td className='p-4'>{product.name}</td>
+                                        <td className='p-4'>{product.amount}</td>
+                                        <td className='p-4'>{`IDR ${product.price.toLocaleString('id-ID')}`}</td>
+                                        <td className='flex justify-around p-4'>
+                                        <TambahButton onTambah={() => console.log('Tambah clicked')} />
+                                        <HapusButton onClick={() => handleDelete(index)} />
+                                        <EditButton onEdit={() => console.log('Edit clicked')} />
+                                        </td>
+                                    </tr>
+                                    ))}
+
                                     </tbody>
                                 </table>
                                 <div className='flex flex-col space-y-2 mt-8'>
