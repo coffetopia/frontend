@@ -88,7 +88,7 @@ const Checkout = () => {
                       <th className="text-left p-4">Name</th>
                       <th className="text-left p-4">Amount</th>
                       <th className="text-left p-4">Price</th>
-                      <th className="text-left p-4"></th>
+                      <th className="text-left p-4">Action</th>
                     </tr>
                   </thead>
                   <tbody>
