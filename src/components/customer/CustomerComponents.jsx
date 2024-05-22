@@ -34,7 +34,7 @@ const CustomerComponents = () => {
               <img src={person} alt="" width={35} />
             </div>
             <div className="name-customer">
-              <h5 className="text-xl font-bold">Nabilla Filda R</h5>
+              <h5 className="text-xl font-bold">Nabilla Rifda R</h5>
               <p className="text-sm">Tegal, Jawa Tengah</p>
             </div>
             <div className="rating-customer flex justify-center items-center h-[30px]">
