@@ -9,11 +9,7 @@ import BestCoffeeForYouComponents from "../components/services/BestCoffeeForYouC
 import bestCoffee from "../assets/best-coffee-icon.png";
 
 const Home = () => {
-  const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  if (!token) {
-    return navigate("/login");
-  }
 
   return (
     <div className="w-full">

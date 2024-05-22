@@ -26,7 +26,7 @@ export default function Login() {
     try {
       const response = await login(user);
       localStorage.setItem("token", response.payload.token);
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       Swal.fire({
         title: "Error!",
