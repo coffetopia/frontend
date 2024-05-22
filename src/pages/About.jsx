@@ -1,13 +1,13 @@
 import React from "react";
 import cafe from "../assets/cafe.png";
 import time from "../assets/jam.jpg";
-import NavbarComponents from "../components/navbar/NavbarComponents"; // Pastikan import path benar
-import BackgroundAbout from "../components/background/BackgroundAbout"; // Pastikan import path benar
+import NavbarComponents from "../components/navbar/NavbarComponents"; 
+import BackgroundAbout from "../components/background/BackgroundAbout"; 
 
 const About = () => {
   return (
     <div className="font-poppins">
-      <NavbarComponents /> {/* Tambahkan Navbar di sini */}
+      <NavbarComponents /> 
       <BackgroundAbout>
         <div className="container mx-auto pt-10 pb-8 sm:pb-0">
           {" "}

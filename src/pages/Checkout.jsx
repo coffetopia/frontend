@@ -61,7 +61,7 @@ const Checkout = () => {
   }, [products]);
 
   return (
-    <div className="font-sans">
+    <div className="font-poppins">
       <NavbarComponents />
       <div
         className="min-h-screen bg-cover bg-center flex justify-center items-start text-[#321313]"
@@ -103,7 +103,9 @@ const Checkout = () => {
                           <TambahButton
                             onTambah={() => console.log("Tambah clicked")}
                           />
-                          <HapusButton onClick={() => handleDelete(index)} />
+                          <HapusButton 
+                          onClick={() => handleDelete(index)}
+                           />
                           <EditButton
                             onEdit={() => console.log("Edit clicked")}
                           />
