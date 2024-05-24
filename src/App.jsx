@@ -8,6 +8,9 @@ import Register from "./pages/Register";
 import Checkout from "./pages/Checkout";
 import About from "./pages/About";
 import Products from "./pages/Products";
+import AdminProduct from "./pages/Admin/AdminProduct";
+import AddProduct from "./pages/Admin/AddProduct";
+import UpdateProduct from "./pages/Admin/UpdateProduct";
 import { useEffect, useState } from "react";
 
 const App = () => {
@@ -46,6 +49,9 @@ const App = () => {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/adminproduct" element={<AdminProduct />} />
+        <Route path="/addproduct" element={<AddProduct />} />
+        <Route path="/updateproduct" element={<UpdateProduct />} />
       </Routes>
     </Router>
   );
