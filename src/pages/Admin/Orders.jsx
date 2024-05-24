@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import BackgroundAbout from "../../components/background/BackgroundAbout";
 import AdminNavbar from "../../components/navbar/AdminNavbar";
 
@@ -18,6 +17,11 @@ const Orders = () => {
   const calculateTotalPrice = () => {
     const totalPrice = products.reduce((total, product) => total + product.price, 0);
     return { total: totalPrice, products: products };
+  };
+
+  // Function to handle print
+  const handlePrint = () => {
+    window.print();
   };
 
   return (
@@ -47,7 +51,7 @@ const Orders = () => {
                 {products.map((product, index) => (
                   <tr key={index}>
                     <td className="p-4">{product.name}</td>
-                    <td className="p-4 ">{product.amount}</td>
+                    <td className="p-4">{product.amount}</td>
                     <td className="p-4 text-right">{`IDR ${product.price.toLocaleString(
                       "id-ID"
                     )}`}</td>
@@ -87,10 +91,13 @@ const Orders = () => {
             <div className="border-b border-gray-200 mb-4"></div> 
             <tr className="font-bold">
               <td className="p-2">Payment Method</td>
-              <td className="p-2  text-right"> Cash </td>
+              <td className="p-2 text-right"> Cash </td>
             </tr>
             <div className="flex justify-center">
-              <button className="w-24 text-[#321313] font-bold bg-[#F4991A] rounded-md p-2 md:p-2 text-center flex items-center justify-center mt-4">
+              <button 
+                onClick={handlePrint}
+                className="w-24 text-[#321313] font-bold bg-[#F4991A] rounded-md p-2 md:p-2 text-center flex items-center justify-center mt-4"
+              >
                 Print
               </button>
             </div>
