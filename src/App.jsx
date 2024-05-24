@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -8,10 +9,10 @@ import Register from "./pages/Register";
 import Checkout from "./pages/Checkout";
 import About from "./pages/About";
 import Products from "./pages/Products";
-import AdminProduct from "./pages/Admin/AdminProduct";
+import AdminProduct from "./pages/Admin/AdminProduct"; // Pastikan hanya ada satu deklarasi untuk AdminProduct
 import AddProduct from "./pages/Admin/AddProduct";
 import UpdateProduct from "./pages/Admin/UpdateProduct";
-import { useEffect, useState } from "react";
+import Orders from "./pages/Admin/Orders"; // Pastikan deklarasi Orders tidak tumpang tindih dengan AdminProduct
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // tambahkan state isLoggedIn
@@ -52,6 +53,7 @@ const App = () => {
         <Route path="/adminproduct" element={<AdminProduct />} />
         <Route path="/addproduct" element={<AddProduct />} />
         <Route path="/updateproduct" element={<UpdateProduct />} />
+        <Route path="/orders" element={<Orders />} />
       </Routes>
     </Router>
   );

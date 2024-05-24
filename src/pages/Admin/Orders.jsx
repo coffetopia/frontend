@@ -1,36 +1,98 @@
-import React from "react";
-import NavbarComponents from "../../components/navbar/NavbarComponents";
-import BackgroundAbout from "../../components/background/BackgroundAbout";
+import React, { useState, useEffect } from "react";
 
-const UpdateProduct = () => {
+import BackgroundAbout from "../../components/background/BackgroundAbout";
+import AdminNavbar from "../../components/navbar/AdminNavbar";
+
+const Orders = () => {
+  const [products, setProducts] = useState([
+    { name: "Product 1", amount: "1", price: 10000 },
+    { name: "Product 2", amount: "2", price: 20000 },
+    { name: "Product 3", amount: "3", price: 30000 },
+  ]);
+
+  useEffect(() => {
+    // Your code to update the table and total price based on the products state
+  }, [products]);
+
+  // Function to calculate total price and return object containing total and products list
+  const calculateTotalPrice = () => {
+    const totalPrice = products.reduce((total, product) => total + product.price, 0);
+    return { total: totalPrice, products: products };
+  };
+
   return (
     <div className="font-poppins">
-      <NavbarComponents />
+      <AdminNavbar />
       <BackgroundAbout>
         <div className="container py-20 px-4 sm:px-0">
-          <div className="p-4">
-            <div className="p-4 bg-white border-1 border-[#321313] rounded-md mt-0">
-              <h3 className="text-xl text-center text-[#321313] font-bold mb-0 p-4">
-                Update Product
-              </h3>
-              <div className="mb-4">
-                <label htmlFor="name" className="block text-[#321313] font-bold">Name:</label>
-                <input type="text" id="name" placeholder="enter your product name" className="w-full text-[#321313] py-1 md:py-2 bg-white border border-[#321313]   rounded-md p-3 md:p-4  focus:border-indigo-500" />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="price" className="block text-[#321313] font-bold">Price:</label>
-                <input type="text" id="price" placeholder="enter your product prince" className="w-full text-[#321313] py-1 md:py-2 bg-white border border-[#321313]   rounded-md p-3 md:p-4  focus:border-indigo-500" />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="image" className="block text-[#321313]"></label>
-                <input type="file" id="image" className="border rounded px-2 py-1" />
-              </div>
-              <div className="mb-4">
-                <button className="w-full text-white bg-[#591E0A] font-bold rounded-md p-3 md:p-3 text-center flex items-center justify-center mb-4"
-                >Update Product</button>
-                <button className="w-full text-[#321313] font-bold bg-[#F4991A] rounded-md p-3 md:p-3 text-center flex items-center justify-center"
-                >Cancel</button>
-              </div>
+          <div className="p-4 bg-white border-1 border-[#321313] rounded-md mt-0 mx-auto">
+            <h3 className="text-2xl text-center font-bold mb-4 border-b border-gray-200">
+              Products
+            </h3>
+            <h3 className="text-37 text-left font-bold">
+              Nama :
+            </h3>
+            <h3 className="text-47 text-left font-bold mb-4">
+              Meja no :
+            </h3>
+            <table className="w-full" id="productTable">
+              <thead>
+                <tr>
+                  <th className="text-left p-4">Name</th>
+                  <th className="text-center p-4">Amount</th>
+                  <th className="text-left p-4">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products.map((product, index) => (
+                  <tr key={index}>
+                    <td className="p-4">{product.name}</td>
+                    <td className="p-4 ">{product.amount}</td>
+                    <td className="p-4 text-right">{`IDR ${product.price.toLocaleString(
+                      "id-ID"
+                    )}`}</td>
+                  </tr>
+                ))}
+              </tbody>
+              
+              <div className="mt-4"/>
+              <h3 className="text-1x text-left font-normal mb-4 border-2 rounded- w-44 py-1 float-right">
+              catatan
+            </h3>
+            </table>
+            <div className="border-b border-gray-200 mb-4"></div>
+            <h3 className="text-2xl text-center font-bold mb-4">
+              Order Summary
+            </h3>
+            <table className="w-full">
+              <tbody>
+                {calculateTotalPrice().products.map((product, index) => (
+                  <tr key={index}>
+                    <td className="p-2">{product.name}</td>
+                    <td className="p-2 text-right">{`IDR ${product.price.toLocaleString(
+                      "id-ID"
+                    )}`}</td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr className="font-bold">
+                  <td className="p-2">Total</td>
+                  <td className="p-2 text-right">{`IDR ${calculateTotalPrice().total.toLocaleString(
+                    "id-ID"
+                  )}`}</td>
+                </tr>
+              </tfoot>
+            </table>
+            <div className="border-b border-gray-200 mb-4"></div> 
+            <tr className="font-bold">
+              <td className="p-2">Payment Method</td>
+              <td className="p-2  text-right"> Cash </td>
+            </tr>
+            <div className="flex justify-center">
+              <button className="w-24 text-[#321313] font-bold bg-[#F4991A] rounded-md p-2 md:p-2 text-center flex items-center justify-center mt-4">
+                Print
+              </button>
             </div>
           </div>
         </div>
@@ -39,4 +101,4 @@ const UpdateProduct = () => {
   );
 };
 
-export default UpdateProduct;
+export default Orders;

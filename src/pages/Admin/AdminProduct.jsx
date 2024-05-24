@@ -1,5 +1,5 @@
 // Component
-import NavbarComponents from "../../components/navbar/NavbarComponents";
+import AdminNavbar from "../../components/navbar/AdminNavbar";
 import ApatizerAdmin from "../../components/AdminServices/ApatizerAdmin";
 import CoffeeAdmin from "../../components/AdminServices/CoffeeAdmin";
 import NonCoffeeAdmin from "../../components/AdminServices/NonCoffeeAdmin";
@@ -57,7 +57,7 @@ const ProductsAdmin = () => {
   return (
     <>
       {/* Navbar */}
-      <NavbarComponents />
+      <AdminNavbar />
       <div className="flex flex-col sm:flex-row mt-8">
         {/* Favorite Menu */}
         <div className="basis-1/3 flex flex-col sm:border">
