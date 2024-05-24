@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-import { login } from "../api";
 import COFFEE_IMAGE from "../assets/coffe.jpg";
 import LOGO_IMAGE from "../assets/logo.png";
 import InputComponents from "../components/authentication/InputComponents";
+import axios from "axios";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -24,9 +24,13 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await login(user);
-      localStorage.setItem("token", response.payload.token);
-      navigate("/home");
+      const response = await axios.post('http://localhost:3000/login', user, {
+        withCredentials: true,
+      });
+      const { accessToken } = response.data.payload;
+      localStorage.setItem('authorization', accessToken);
+      console.log(accessToken);
+      navigate("/");
     } catch (error) {
       Swal.fire({
         title: "Error!",

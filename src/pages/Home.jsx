@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 // Component
 import NavbarComponents from "../components/navbar/NavbarComponents";
 import BannerComponents from "../components/banner/BannerComponents";
@@ -7,12 +7,29 @@ import FooterComponents from "../components/footer/FooterComponents";
 import BestCoffeeForYouComponents from "../components/services/BestCoffeeForYouComponents";
 // Asset
 import bestCoffee from "../assets/best-coffee-icon.png";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { useEffect } from "react";
 
 const Home = () => {
-  const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-  if (!token) {
-    return navigate("/login");
+  useEffect(() => {
+    refreshToken();
+  }, []);
+
+  const refreshToken = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/token', {
+        withCredentials: true,
+      });
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        title: "Error!",
+        text: "Email atau Password Salah",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
   }
 
   return (

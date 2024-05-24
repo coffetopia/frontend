@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import logo from "../../assets/logo1.png";
 
 const NavbarComponents = () => {
+  const token = localStorage.getItem('token');
   return (
     <div className="w-full h-[70px] p-2 flex flex-row">
       <div className="basis-2/4 sm:basis-1/4">
@@ -58,16 +59,26 @@ const NavbarComponents = () => {
       </div>
       <div className="basis-3/4 sm:basis-1/4">
         <div className="flex justify-center items-center font-bold h-full">
-          <NavLink to="/login">
-            <div className="text-center text-xs sm:text-sm px-2 md:text-lg md:px-5 md:py-1 py-2 bg-white rounded-2xl mx-1 sm:mx-2">
-              <p>Sign In</p>
-            </div>
-          </NavLink>
-          <NavLink to="/register">
-            <div className="text-center text-xs sm:text-sm px-2 md:text-lg md:px-5 md:py-1 py-2 bg-[#F4991A] rounded-2xl mx-1 sm:mx-2">
-              <p>Sign up</p>
-            </div>
-          </NavLink>
+          {!token ?
+          <>
+            <NavLink to="/login">
+              <div className="text-center text-xs sm:text-sm px-2 md:text-lg md:px-5 md:py-1 py-2 bg-white rounded-2xl mx-1 sm:mx-2">
+                <p>Sign In</p>
+              </div>
+            </NavLink>
+            <NavLink to="/register">
+              <div className="text-center text-xs sm:text-sm px-2 md:text-lg md:px-5 md:py-1 py-2 bg-[#F4991A] rounded-2xl mx-1 sm:mx-2">
+                <p>Sign up</p>
+              </div>
+            </NavLink>
+          </>
+          :
+            <NavLink to="/register">
+              <div className="text-center text-xs sm:text-sm px-2 md:text-lg md:px-5 md:py-1 py-2 bg-[#F4991A] rounded-2xl mx-1 sm:mx-2">
+                <p>Logout</p>
+              </div>
+            </NavLink>
+          }
         </div>
       </div>
     </div>
