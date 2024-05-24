@@ -29,7 +29,7 @@ const NavbarLoggedIn = () => {
             <p>Home</p>
           </NavLink>
           <NavLink
-            to="/products"
+            to="/adminproduct"
             className={({ isActive }) =>
               `flex items-center px-2 md:px-6 py-2 rounded-xl ${
                 isActive ? "text-[#591E0A] font-bold" : " "
