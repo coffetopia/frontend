@@ -12,11 +12,13 @@ import cappucino from "../assets/cappucino.png";
 import { useState } from "react";
 
 const ProductsApatizer = () => {
+  // State untuk menentukan jenis menu yang sedang ditampilkan
   const [isApatizer, setApatizer] = useState(true);
   const [isCoffee, setCoffee] = useState(false);
   const [isNonCoffee, setNonCoffee] = useState(false);
   const [isFoods, setFoods] = useState(false);
 
+  // Fungsi untuk menampilkan menu Apatizer
   const handleApatizer = () => {
     setApatizer(true);
     setCoffee(false);
@@ -24,24 +26,30 @@ const ProductsApatizer = () => {
     setFoods(false);
   };
 
+  // Fungsi untuk menampilkan menu Coffee
   const handleCoffee = () => {
     setApatizer(false);
     setCoffee(true);
     setNonCoffee(false);
     setFoods(false);
   };
+
+  // Fungsi untuk menampilkan menu Non Coffee
   const handleNonCoffee = () => {
     setApatizer(false);
     setCoffee(false);
     setNonCoffee(true);
     setFoods(false);
   };
+
+  // Fungsi untuk menampilkan menu Foods
   const handleFoods = () => {
     setApatizer(false);
     setCoffee(false);
     setNonCoffee(false);
     setFoods(true);
   };
+
   return (
     <>
       {/* Navbar */}
@@ -82,6 +90,7 @@ const ProductsApatizer = () => {
         </div>
         {/* Content Menu*/}
         <div className="sm:basis-2/3 flex flex-col mt-5 sm:mt-0">
+          {/* Tombol untuk memilih jenis menu */}
           <div className="flex h-[50px] w-full sm:w-[70%] justify-evenly items-center">
             <button
               className={`text-base sm:text-lg ${
