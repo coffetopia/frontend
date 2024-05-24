@@ -8,7 +8,7 @@ import tahuGejrot from "../../assets/tahuGejrot.png";
 
 const ApatizerMenu = () => {
   // State untuk menentukan apakah user sudah login
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   // State untuk mengelola item yang ditambahkan ke keranjang
   const [cart, setCart] = useState([]);
 
