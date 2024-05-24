@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Checkout from "./pages/Checkout";
 import About from "./pages/About";
+import Products from "./pages/Products";
 import { useEffect } from "react";
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/about" element={<About />} />
+        <Route path="/products" element={<Products />} />
       </Routes>
     </Router>
   );
