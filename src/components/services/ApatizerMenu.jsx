@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 // Asset
 import tahuGejrot from "../../assets/tahuGejrot.png";
 import useAuth from "../../hooks/useAuth";
-import { axiosPrivate } from "../../api/axios";
+import axios from "../../api/axios";
 
 const ApatizerMenu = () => {
   const { auth } = useAuth();
@@ -14,7 +14,7 @@ const ApatizerMenu = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosPrivate.get('/products');
+        const response = await axios.get('/products');
         const products = response.data.payload;
         setMenus(products);
       } catch (error) {
@@ -48,8 +48,6 @@ const ApatizerMenu = () => {
       });
     }
   };
-
-  console.log(cart);
 
   return (
     <>
