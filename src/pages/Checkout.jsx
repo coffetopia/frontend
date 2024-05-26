@@ -9,6 +9,7 @@ import Buttoncash from "../components/buttoncheckout/Buttoncash";
 import TambahButton from "../components/buttonaction/TambahButton";
 import HapusButton from "../components/buttonaction/HapusButton";
 import KurangButton from "../components/buttonaction/KurangButton";
+import Swal from "sweetalert2";
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -28,91 +29,116 @@ const Checkout = () => {
   const [tableNumber, setTableNumber] = useState(""); // State for table number
 
   const handleDelete = (index) => {
-    const updatedProducts = [...products];
-    updatedProducts.splice(index, 1);
-    setProducts(updatedProducts);
+    Swal.fire({
+      title: "Apakah Anda yakin ingin menghapus pemesanan ini?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ya, hapus!",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const updatedProducts = [...products];
+        updatedProducts.splice(index, 1);
+        setProducts(updatedProducts);
+        Swal.fire(
+          "Terhapus!",
+          "Pemesanan telah dihapus.",
+          "success"
+        );
+      }
+    });
   };
+  
 
   const handleTambah = (index) => {
-    const updatedProducts = [...products];
-    updatedProducts[index].amount += 1;
-    setProducts(updatedProducts);
+    if (!isConfirmed) {
+      const updatedProducts = [...products];
+      updatedProducts[index].amount += 1;
+      setProducts(updatedProducts);
+    }
   };
 
   const handleKurang = (index) => {
-    const updatedProducts = [...products];
-    if (updatedProducts[index].amount > 1) {
-      updatedProducts[index].amount -= 1;
-    } else {
-      updatedProducts.splice(index, 1);
+    if (!isConfirmed) {
+      const updatedProducts = [...products];
+      if (updatedProducts[index].amount > 1) {
+        updatedProducts[index].amount -= 1;
+      } else {
+        updatedProducts.splice(index, 1);
+      }
+      setProducts(updatedProducts);
     }
-    setProducts(updatedProducts);
   };
 
   const handleAddMenu = () => {
     navigate('/products'); // Navigasi kembali ke halaman produk
-    };
+  };
 
-    // Tambahkan state untuk menyimpan pesanan yang dikonfirmasi
-const [confirmedOrder, setConfirmedOrder] = useState([]);
+  // State untuk menyimpan pesanan yang sudah dikonfirmasi
+  const [confirmedOrder, setConfirmedOrder] = useState([]);
 
-// Buat fungsi untuk menangani konfirmasi pesanan
-const handleConfirm = () => {
-  // Hitung total harga
-  let totalPrice = 0;
-  products.forEach((product) => {
-    totalPrice += product.price * product.amount;
-  });
+  // State untuk mengontrol apakah order sudah dikonfirmasi atau belum
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
-  // Set state untuk confirmedOrder dan total harga
-  setConfirmedOrder(products);
-  setTotalPrice(totalPrice);
-  setIsConfirmed(true); // Setelah konfirmasi, order sudah dikonfirmasi
-};
+  // State untuk menyimpan total harga
+  const [totalPrice, setTotalPrice] = useState(0);
 
+  // Fungsi untuk menangani konfirmasi pesanan
+  const handleConfirm = () => {
+    if (!isConfirmed) {
+      // Simpan daftar produk yang sudah dikonfirmasi
+      setConfirmedOrder([...products]);
 
-// Tambahkan state untuk mengontrol apakah order sudah dikonfirmasi atau belum
-const [isConfirmed, setIsConfirmed] = useState(false);
+      // Hitung total harga
+      let totalPrice = 0;
+      products.forEach((product) => {
+        totalPrice += product.price * product.amount;
+      });
 
-// Tambahkan state untuk menyimpan total harga
-const [totalPrice, setTotalPrice] = useState(0);
-useEffect(() => {
-  const tableBody = document.querySelector("#productTable tbody");
-  const totalPriceElement = document.getElementById("totalPrice");
-  let totalPrice = 0;
+      // Set state untuk total harga dan status konfirmasi
+      setTotalPrice(totalPrice);
+      setIsConfirmed(true);
+    }
+  };
 
-  if (tableBody) {
-    tableBody.innerHTML = "";
+  useEffect(() => {
+    const tableBody = document.querySelector("#productTable tbody");
+    const totalPriceElement = document.getElementById("totalPrice");
+    let totalPrice = 0;
 
-    products.forEach((product) => {
-      const row = document.createElement("tr");
+    if (tableBody) {
+      tableBody.innerHTML = "";
 
-      const nameCell = document.createElement("td");
-      nameCell.textContent = product.name;
-      nameCell.className = "p-4";
-      row.appendChild(nameCell);
+      products.forEach((product) => {
+        const row = document.createElement("tr");
 
-      const amountCell = document.createElement("td");
-      amountCell.className = "p-4 text-center";
-      amountCell.textContent = product.amount;
-      row.appendChild(amountCell);
+        const nameCell = document.createElement("td");
+        nameCell.textContent = product.name;
+        nameCell.className = "p-4";
+        row.appendChild(nameCell);
 
-      const priceCell = document.createElement("td");
-      priceCell.textContent = `IDR ${product.price.toLocaleString("id-ID")}`;
-      priceCell.className = "p-4 text-right";
-      row.appendChild(priceCell);
+        const amountCell = document.createElement("td");
+        amountCell.className = "p-4 text-center";
+        amountCell.textContent = product.amount;
+        row.appendChild(amountCell);
 
-      tableBody.appendChild(row);
+        const priceCell = document.createElement("td");
+        priceCell.textContent = `IDR ${product.price.toLocaleString("id-ID")}`;
+        priceCell.className = "p-4 text-right";
+        row.appendChild(priceCell);
 
-      totalPrice += product.price * product.amount;
-    });
-  }
+        tableBody.appendChild(row);
 
-  if (totalPriceElement) {
-    totalPriceElement.textContent = `IDR ${totalPrice.toLocaleString("id-ID")}`;
-  }
-}, [products]);
+        totalPrice += product.price * product.amount;
+      });
+    }
 
+    if (totalPriceElement) {
+      totalPriceElement.textContent = `IDR ${totalPrice.toLocaleString("id-ID")}`;
+    }
+  }, [products]);
 
   return (
     <div className="font-poppins">
@@ -157,9 +183,8 @@ useEffect(() => {
                           "id-ID"
                         )}`}</td>
                         <td className="p-4 flex justify-start items-center">
-                        <HapusButton onClick={() => handleDelete(index)} />
-                      </td>
-
+                          <HapusButton onClick={() => handleDelete(index)} />
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -190,32 +215,32 @@ useEffect(() => {
                   />
                 </div>
                 <div className="flex justify-between">
-                <div className="flex justify-start w-full mb-4 sm:mb-4 mt-8">
-                  <button
-                    type="submit"
-                    onClick={handleAddMenu} // Panggil fungsi handleAddMenu saat tombol diklik
-                    className="text-white bg-[#591E0A] hover:bg-[#693828] focus:ring-4 focus:outline-none focus:ring-[#a15941] font-bold rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-                  >
-                    Add Menu
-                  </button>
-                </div>
-                  <div className="flex justify-end w-full mb-4 sm:mb-4 mt-8">
-                  <button
-                  type="submit"
-                  onClick={handleConfirm}
-                  className="text-white bg-[#F4991A] hover:bg-[#f6aa40] focus:ring-4 focus:outline-none focus:ring-[#facc8d] font-bold rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-                >
-                  Confirm
-                </button>
+                  <div className="flex justify-start w-full mb-4 sm:mb-4 mt-8">
+                    <button
+                      type="submit"
+                      onClick={handleAddMenu} // Panggil fungsi handleAddMenu saat tombol diklik
+                      className="text-white bg-[#591E0A] hover:bg-[#693828] focus:ring-4 focus:outline-none focus:ring-[#a15941] font-bold rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+                    >
+                      Add Menu
+                    </button>
                   </div>
-                </div>      
+                  <div className="flex justify-end w-full mb-4 sm:mb-4 mt-8">
+                    <button
+                      type="submit"
+                      onClick={handleConfirm}
+                      className="text-white bg-[#F4991A] hover:bg-[#f6aa40] focus:ring-4 focus:outline-none focus:ring-[#facc8d] font-bold rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+                    >
+                      Confirm
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="p-4">
               <h3 className="text-xl text-left text-white font-bold mb-0">
                 Order Summary
               </h3>
-              
+
               {isConfirmed && (
                 <div className="p-4 bg-white border-1 rounded-md w-4/5 mt-0 border-[#321313]">
                   <table id="productTable" className="w-full">
@@ -224,11 +249,10 @@ useEffect(() => {
                         <tr key={index}>
                           <td className="p-4">{product.name}</td>
                           <td className="p-4 text-center">{product.amount}</td>
-                          <td className="p-4 text-right">{`IDR ${product.price.toLocaleString("id-ID")}`}</td>
+                          <td className="p-4 text-right">{`IDR ${(product.price * product.amount).toLocaleString("id-ID")}`}</td>
                         </tr>
                       ))}
                     </tbody>
-              
                     <tfoot>
                       <tr className="font-bold">
                         <td className="p-4">Total</td>
@@ -237,8 +261,9 @@ useEffect(() => {
                       </tr>
                     </tfoot>
                   </table>
-            </div>
-            )}
+                </div>
+              )}
+
               <div className="p-4 mt-4">
                 <h3 className="text-xl text-left text-white font-bold mb-0">
                   Payment Method
@@ -259,7 +284,7 @@ useEffect(() => {
               <div className="p-4 mt-4">
                 <button
                   type="submit"
-                  className="text-white bg-[#F4991A] hover:bg-[#f6aa40] focus:ring-4 focus:outline-none focus:ring-[#facc8d] font-bold rounded-lg text-sm w-full sm:w-auto px-56 py-3.5 text-center disabled:bg-opacity-100"
+                  className="text-white bg-[#F4991A] hover:bg-[#f6aa40] focus:ring-4 focus:outline-none focus:ring-[#facc8d] font-bold rounded-lg text-sm w-full sm:w-auto px-44 py-3.5 text-center disabled:bg-opacity-100"
                 >
                   Confirm and Pay
                 </button>
@@ -269,7 +294,6 @@ useEffect(() => {
         </div>
       </div>
     </div>
-    
   );
 };
 
