@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import NavbarComponents from "../components/navbar/NavbarComponents";
 import COFFEE_IMAGE from "../assets/coffe.jpg";
 import Buttoncard from "../components/buttoncheckout/Buttoncard";
@@ -11,14 +10,6 @@ import EditButton from "../components/buttonaction/EditButton";
 // Ensure correct import
 
 const Checkout = () => {
-  const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    navigate("/");
-    return null;
-  }
-
   const handleDelete = (index) => {
     const updatedProducts = [...products];
     updatedProducts.splice(index, 1);
