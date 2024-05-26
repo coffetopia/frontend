@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-import HomeLogin from "./pages/HomeLogin";
 import Register from "./pages/Register";
 import Checkout from "./pages/Checkout";
 import About from "./pages/About";
@@ -13,20 +12,11 @@ import AdminProduct from "./pages/Admin/AdminProduct"; // Pastikan hanya ada sat
 import AddProduct from "./pages/Admin/AddProduct";
 import UpdateProduct from "./pages/Admin/UpdateProduct";
 import Orders from "./pages/Admin/Orders"; // Pastikan deklarasi Orders tidak tumpang tindih dengan AdminProduct
+import Layout from "./pages/Layout";
+import RequireAuth from "./pages/RequireAuth";
+import PresistLogin from './components/PresistLogin';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // tambahkan state isLoggedIn
-
-  // fungsi untuk mengecek apakah user sudah login
-  const checkLoginStatus = () => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  };
-
   useEffect(() => {
     AOS.init(
       {
@@ -37,23 +27,33 @@ const App = () => {
       },
       []
     );
-    checkLoginStatus(); // panggil fungsi checkLoginStatus saat komponen dipasang
   }, []);
 
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<HomeLogin />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/adminproduct" element={<AdminProduct />} />
-        <Route path="/addproduct" element={<AddProduct />} />
-        <Route path="/updateproduct" element={<UpdateProduct />} />
-        <Route path="/orders" element={<Orders />} />
+        <Route path="/" element={<Layout />}>
+          <Route element={<PresistLogin />}> 
+            {/* public routes */}
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="about" element={<About />} />
+            <Route path="/" element={<Home />} />
+            <Route path="products" element={<Products />} />
+            
+            {/* protect routes */}
+            <Route element={<RequireAuth allowedRoles={['member', 'admin']} />} >
+              <Route path="checkout" element={<Checkout />} />
+              <Route path="orders" element={<Orders />} />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={['admin']} />} >
+              <Route path="adminproduct" element={<AdminProduct />} />
+              <Route path="addproduct" element={<AddProduct />} />
+              <Route path="updateproduct" element={<UpdateProduct />} />
+            </Route>
+          </Route>
+        </Route>
       </Routes>
     </Router>
   );

@@ -1,14 +1,18 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import { login } from "../api";
 import COFFEE_IMAGE from "../assets/coffe.jpg";
 import LOGO_IMAGE from "../assets/logo.png";
 import InputComponents from "../components/authentication/InputComponents";
+import { axiosPrivate } from "../api/axios";
+import useAuth from "../hooks/useAuth";
 
 export default function Login() {
+  const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname == '/login' ? '/' : location.state?.from?.pathname || '/';
+  
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -22,21 +26,23 @@ export default function Login() {
   }; // Fungsi untuk mengubah nilai state user ketika input berubah
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Mencegah halaman melakukan refresh ketika form disubmit
+    e.preventDefault();
     try {
-      const response = await login(user); // Coba login
-      localStorage.setItem("token", response.payload.token); // Menyimpan token di localStorage
-      navigate("/home"); // Berpindah ke Home Login
+      const response = await axiosPrivate.post('/login', user);
+      localStorage.setItem('user', user.username);
+      const { roles, accessToken } = response.data.payload;
+      setAuth({ user: localStorage.getItem('user'), roles, accessToken });
+      navigate(from, {replace: true});
     } catch (error) {
-      Swal.fire({
-        title: "Error!",
-        text: "Email atau Password Salah",
-        icon: "error",
-        confirmButtonText: "Ok",
-      }); // Menampilkan alert jika login gagal
-      console.error("login page", error);
+      console.error(error);
     }
-  };
+  }
+
+  useEffect(() => {
+    if(auth.accessToken) {
+      navigate(from, {replace: true});
+    }
+  }, [navigate, auth.accessToken, from]);
 
   return (
     <div className="h-screen mx-auto flex flex-col md:flex-row font-sans">

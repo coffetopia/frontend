@@ -1,6 +1,4 @@
-import ReactDOM from 'react-dom';
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import NavbarComponents from "../components/navbar/NavbarComponents";
 import COFFEE_IMAGE from "../assets/coffe.jpg";
 import Buttoncard from "../components/buttoncheckout/Buttoncard";
@@ -12,14 +10,6 @@ import KurangButton from "../components/buttonaction/KurangButton";
 import Swal from "sweetalert2";
 
 const Checkout = () => {
-  const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    navigate("/");
-    return null;
-  }
-
   const [products, setProducts] = useState([
     { name: "Product 1", amount: 1, price: 10000 },
     { name: "Product 2", amount: 2, price: 20000 },

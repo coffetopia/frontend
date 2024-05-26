@@ -1,20 +1,36 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+
 // Asset
-import kulitAyam from "../../assets/kulitAyam.png";
-import lumpia from "../../assets/lumpia.png";
 import tahuGejrot from "../../assets/tahuGejrot.png";
+import useAuth from "../../hooks/useAuth";
+import { axiosPrivate } from "../../api/axios";
 
 const ApatizerMenu = () => {
-  // State untuk menentukan apakah user sudah login
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { auth } = useAuth();
+  const [menus, setMenus] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosPrivate.get('/products');
+        const products = response.data.payload;
+        setMenus(products);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   // State untuk mengelola item yang ditambahkan ke keranjang
   const [cart, setCart] = useState([]);
 
   // Fungsi untuk menangani penambahan item ke keranjang
   const handleOrderClick = (product) => {
-    if (!isLoggedIn) {
+    if (!auth?.accessToken) {
       // Menampilkan alert jika user belum login
       Swal.fire({
         title: "Silahkan sign in untuk memesan pesanan!",
@@ -33,12 +49,7 @@ const ApatizerMenu = () => {
     }
   };
 
-  // Daftar produk apatizer
-  const products = [
-    { name: "Tahu Gejrot", price: "IDR 15.000", image: tahuGejrot },
-    { name: "Lumpia Rebung", price: "IDR 17.000", image: lumpia },
-    { name: "Kulit Ayam Krispy", price: "IDR 20.000", image: kulitAyam },
-  ];
+  console.log(cart);
 
   return (
     <>
@@ -46,7 +57,7 @@ const ApatizerMenu = () => {
         <table className="table-auto">
           <tbody className="flex flex-col w-[100%]">
             {/* Loop melalui setiap produk dan tampilkan dalam bentuk baris */}
-            {products.map((product, index) => (
+            {menus.map((product, index) => (
               <tr
                 key={index}
                 className="flex w-[100%] justify-start items-center"
@@ -54,7 +65,7 @@ const ApatizerMenu = () => {
                 <td className="basis-1/4">
                   {/* Menampilkan gambar produk */}
                   <img
-                    src={product.image}
+                    src={tahuGejrot}
                     alt={product.name}
                     className="mx-2 w-[100px] sm:mx-10 my-5 sm:w-[130px]"
                   />
