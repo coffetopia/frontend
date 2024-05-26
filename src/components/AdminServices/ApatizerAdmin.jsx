@@ -13,20 +13,28 @@ const ApatizerAdmin = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(true); // Assume this state determines if the user is logged in
     const [cart, setCart] = useState([]); // State to manage cart items
 
-    const handleOrderClick = (product, action) => {
-        if (action === "delete") {
-            // Implement delete logic here
-            const updatedProducts = products.filter((p) => p !== product);
-            setProducts(updatedProducts);
-            Swal.fire({
-                title: "Product telah dihapus",
-                icon: "success",
-                confirmButtonText: "Ok",
-            });
-        }
+    const handleDelete = (product) => {
+        Swal.fire({
+            title: "Apakah Anda yakin ingin menghapus produk ini?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const updatedCart = cart.filter((item) => item !== product);
+                setCart(updatedCart);
+                Swal.fire(
+                    "Terhapus!",
+                    "Produk telah dihapus.",
+                    "success"
+                );
+            }
+        });
     };
     
-
     const products = [
         { name: "Tahu Gejrot", price: "IDR 15.000", image: tahuGejrot },
         { name: "Lumpia Rebung", price: "IDR 17.000", image: lumpia },
@@ -63,7 +71,7 @@ const ApatizerAdmin = () => {
                                 <td className="basis-1/4 flex justify-around p-4">
                                     <div className="flex">
                                         <button
-                                            onClick={() => handleOrderClick(product, "delete")}
+                                            onClick={() => handleDelete(product)}
                                             className="bg-[#F41A1A] text-black w-7 h-7 rounded mr-2"
                                         >
                                             <FontAwesomeIcon icon={faTrash} />
@@ -78,7 +86,6 @@ const ApatizerAdmin = () => {
                                         </Link>
                                     </div>
                                 </td>
-
                             </tr>
                         ))}
                     </tbody>

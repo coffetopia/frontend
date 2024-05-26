@@ -23,18 +23,26 @@ const CoffeeAdmin = () => {
     // State untuk mengelola item yang ditambahkan ke keranjang
     const [cart, setCart] = useState([]);
 
-    const handleOrderClick = (product, action) => {
-        if (action === "delete") {
-            // Implement delete logic here
-            const updatedProducts = products.filter((p) => p !== product);
-            // Assuming you meant to use setProducts here, but it seems you don't have a state for products
-            setProducts(updatedProducts);
-            Swal.fire({
-                title: "Product telah dihapus",
-                icon: "success",
-                confirmButtonText: "Ok",
-            });
-        }
+    const handleDelete = (product) => {
+        Swal.fire({
+            title: "Apakah Anda yakin ingin menghapus produk ini?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const updatedCart = cart.filter((item) => item !== product);
+                setCart(updatedCart);
+                Swal.fire(
+                    "Terhapus!",
+                    "Produk telah dihapus.",
+                    "success"
+                );
+            }
+        });
     };
 
     return (
@@ -71,7 +79,7 @@ const CoffeeAdmin = () => {
                                 <td className="basis-1/4 flex justify-around p-4">
                                     <div className="flex">
                                         <button
-                                            onClick={() => handleOrderClick(product, "delete")}
+                                            onClick={() => handleDelete(product)} // Memperbaiki pemanggilan fungsi handleDelete
                                             className="bg-[#F41A1A] text-black w-7 h-7 rounded mr-2"
                                         >
                                             <FontAwesomeIcon icon={faTrash} />
