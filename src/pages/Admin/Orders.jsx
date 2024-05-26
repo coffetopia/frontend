@@ -15,7 +15,7 @@ const Orders = () => {
 
   // Function to calculate total price and return object containing total and products list
   const calculateTotalPrice = () => {
-    const totalPrice = products.reduce((total, product) => total + product.price, 0);
+    const totalPrice = products.reduce((total, product) => total + (product.price * product.amount), 0);
     return { total: totalPrice, products: products };
   };
 
@@ -51,18 +51,21 @@ const Orders = () => {
                 {products.map((product, index) => (
                   <tr key={index}>
                     <td className="p-4">{product.name}</td>
-                    <td className="p-4">{product.amount}</td>
+                    <td className="p-4 text-center">{product.amount}</td>
                     <td className="p-4 text-right">{`IDR ${product.price.toLocaleString(
                       "id-ID"
                     )}`}</td>
                   </tr>
                 ))}
+                <tr>
+                  <td colSpan="3" className="p-4 text-left">
+                    <div className="mt-4"/>
+                    <h3 className="text-1x text-left font-normal mb-4 border-2 rounded- w-44 py-1 float-right">
+                      catatan
+                    </h3>
+                  </td>
+                </tr>
               </tbody>
-              
-              <div className="mt-4"/>
-              <h3 className="text-1x text-left font-normal mb-4 border-2 rounded- w-44 py-1 float-right">
-              catatan
-            </h3>
             </table>
             <div className="border-b border-gray-200 mb-4"></div>
             <h3 className="text-2xl text-center font-bold mb-4">
@@ -73,7 +76,8 @@ const Orders = () => {
                 {calculateTotalPrice().products.map((product, index) => (
                   <tr key={index}>
                     <td className="p-2">{product.name}</td>
-                    <td className="p-2 text-right">{`IDR ${product.price.toLocaleString(
+                    <td className="p-2 text-center">{product.amount}</td>
+                    <td className="p-2 text-right">{`IDR ${(product.price * product.amount).toLocaleString(
                       "id-ID"
                     )}`}</td>
                   </tr>
@@ -81,18 +85,23 @@ const Orders = () => {
               </tbody>
               <tfoot>
                 <tr className="font-bold">
-                  <td className="p-2">Total</td>
+                  <td className="p-2" colSpan="2">Total</td>
                   <td className="p-2 text-right">{`IDR ${calculateTotalPrice().total.toLocaleString(
                     "id-ID"
                   )}`}</td>
                 </tr>
               </tfoot>
             </table>
+
             <div className="border-b border-gray-200 mb-4"></div> 
-            <tr className="font-bold">
-              <td className="p-2">Payment Method</td>
-              <td className="p-2 text-right"> Cash </td>
-            </tr>
+            <table className="w-full">
+              <tbody>
+                <tr className="font-bold">
+                  <td className="p-2">Payment Method</td>
+                  <td className="p-2 text-right"> Cash </td>
+                </tr>
+              </tbody>
+            </table>
             <div className="flex justify-center">
               <button 
                 onClick={handlePrint}
