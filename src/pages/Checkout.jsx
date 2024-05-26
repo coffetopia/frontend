@@ -29,29 +29,30 @@ const Checkout = () => {
   const [tableNumber, setTableNumber] = useState(""); // State for table number
 
   const handleDelete = (index) => {
-    Swal.fire({
-      title: "Apakah Anda yakin ingin menghapus pemesanan ini?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Ya, hapus!",
-      cancelButtonText: "Batal",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const updatedProducts = [...products];
-        updatedProducts.splice(index, 1);
-        setProducts(updatedProducts);
-        Swal.fire(
-          "Terhapus!",
-          "Pemesanan telah dihapus.",
-          "success"
-        );
-      }
-    });
+    if (!isConfirmed) {
+      Swal.fire({
+        title: "Apakah Anda yakin ingin menghapus pemesanan ini?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, hapus!",
+        cancelButtonText: "Batal",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const updatedProducts = [...products];
+          updatedProducts.splice(index, 1);
+          setProducts(updatedProducts);
+          Swal.fire(
+            "Terhapus!",
+            "Pemesanan telah dihapus.",
+            "success"
+          );
+        }
+      });
+    }
   };
   
-
   const handleTambah = (index) => {
     if (!isConfirmed) {
       const updatedProducts = [...products];
