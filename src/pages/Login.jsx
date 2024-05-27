@@ -26,6 +26,7 @@ export default function Login() {
     try {
       const response = await login(user); // Coba login
       localStorage.setItem("token", response.payload.token); // Menyimpan token di localStorage
+      localStorage.setItem("username", response.payload.username); // Menyimpan token di localStorage
       navigate("/home"); // Berpindah ke Home Login
     } catch (error) {
       Swal.fire({

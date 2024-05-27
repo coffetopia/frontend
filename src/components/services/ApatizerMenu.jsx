@@ -1,20 +1,23 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 // Asset
 import kulitAyam from "../../assets/kulitAyam.png";
 import lumpia from "../../assets/lumpia.png";
 import tahuGejrot from "../../assets/tahuGejrot.png";
 
 const ApatizerMenu = () => {
-  // State untuk menentukan apakah user sudah login
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate(); // untuk navigasi
+  const token = localStorage.getItem("token"); // ambil token dari localstorage
+  const username = localStorage.getItem("username"); // ambil username dari localstorage
+
   // State untuk mengelola item yang ditambahkan ke keranjang
   const [cart, setCart] = useState([]);
 
   // Fungsi untuk menangani penambahan item ke keranjang
   const handleOrderClick = (product) => {
-    if (!isLoggedIn) {
+    if (!token && !username) {
       // Menampilkan alert jika user belum login
       Swal.fire({
         title: "Silahkan sign in untuk memesan pesanan!",
@@ -39,6 +42,21 @@ const ApatizerMenu = () => {
     { name: "Lumpia Rebung", price: "IDR 17.000", image: lumpia },
     { name: "Kulit Ayam Krispy", price: "IDR 20.000", image: kulitAyam },
   ];
+
+  // Fungsi untuk mengecek apakah user sudah login sebelum mengakses halaman checkout ketika mengklik next
+  const isLogin = () => {
+    if (!token && !username) {
+      Swal.fire({
+        icon: "error",
+        title: "Perlu Akses Login",
+        text: "Halaman yang anda minta memerlukan akses login. Silahkan login terlebih dahulu",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login", { replace: true });
+        }
+      });
+    }
+  };
 
   return (
     <>
@@ -89,6 +107,7 @@ const ApatizerMenu = () => {
         {/* Link ke halaman checkout */}
         <Link
           to="/checkout"
+          onClick={isLogin}
           className="text-base sm:text-2xl font-bold bg-[#F4991A] border border-[#321313] w-[120px] h-[40px] flex justify-center items-center"
         >
           <p>Next &gt;</p>

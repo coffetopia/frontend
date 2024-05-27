@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 // Asset
 import coffeeLate from "../../assets/coffee-late.png";
 import americano from "../../assets/americano.png";
@@ -8,14 +9,31 @@ import cappucino from "../../assets/cappucino.png";
 import coffee1 from "../../assets/coffee1.png";
 
 const CoffeeMenu = () => {
-  // State untuk menentukan apakah user sudah login
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token"); // ambil token dari localstorage
+  const username = localStorage.getItem("username"); // ambil username dari localstorage
+
+  // Fungsi untuk mengecek apakah user sudah login sebelum mengakses halaman checkout ketika klik next
+  const isLogin = () => {
+    if (!token && !username) {
+      Swal.fire({
+        icon: "error",
+        title: "Perlu Akses Login",
+        text: "Halaman yang anda minta memerlukan akses login. Silahkan login terlebih dahulu",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login", { replace: true });
+        }
+      });
+    }
+  };
+
   // State untuk mengelola item yang ditambahkan ke keranjang
   const [cart, setCart] = useState([]);
 
   // Fungsi untuk menangani penambahan item ke keranjang
   const handleOrderClick = (product) => {
-    if (!isLoggedIn) {
+    if (!token && !username) {
       // Menampilkan alert jika user belum login
       Swal.fire({
         title: "Silahkan sign in untuk memesan pesanan!",
@@ -91,6 +109,7 @@ const CoffeeMenu = () => {
         {/* Link ke halaman checkout */}
         <Link
           to="/checkout"
+          onClick={isLogin}
           className="text-base sm:text-2xl font-bold bg-[#F4991A] border border-[#321313] w-[120px] h-[40px] flex justify-center items-center"
         >
           <p>Next &gt;</p>
