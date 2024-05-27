@@ -122,7 +122,7 @@ const AdminLoggedIn = () => {
       <div className="hidden sm:flex sm:basis-2/4 flex justify-center">
         <div className="items-center bg-[#fff] hidden text-sm sm:flex text-[#707070] md:text-lg font-medium">
           <NavLink
-            to="/"
+            to="/home"
             className={({ isActive }) =>
               `flex items-center px-2 md:px-6 py-2 rounded-xl ${
                 isActive ? "text-[#591E0A] font-bold" : " "
@@ -132,7 +132,7 @@ const AdminLoggedIn = () => {
             <p>Home</p>
           </NavLink>
           <NavLink
-            to="/products"
+            to="/adminproduct"
             className={({ isActive }) =>
               `flex items-center px-2 md:px-6 py-2 rounded-xl ${
                 isActive ? "text-[#591E0A] font-bold" : " "
@@ -142,14 +142,14 @@ const AdminLoggedIn = () => {
             <p>Products</p>
           </NavLink>
           <NavLink
-            to="/checkout"
+            to="/orders"
             className={({ isActive }) =>
               `flex items-center px-2 md:px-6 py-2 rounded-xl ${
                 isActive ? "text-[#591E0A] font-bold" : " "
               }`
             }
           >
-            <p>Checkout</p>
+            <p>Orders</p>
           </NavLink>
           <NavLink
             to="/about"
