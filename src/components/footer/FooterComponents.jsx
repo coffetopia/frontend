@@ -59,7 +59,7 @@ const FooterComponents = () => {
             <h5 className="font-bold mb-3">Engage</h5>
             <Link>Coffe Shop?</Link>
             <Link>FAQ</Link>
-            <Link>About Us</Link>
+            <Link to={'/about'}>About Us</Link>
             <Link>Privacy Policy</Link>
             <Link>Terms of Services</Link>
           </div>

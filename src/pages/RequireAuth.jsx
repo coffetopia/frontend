@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth"
 import { useEffect } from "react";
 import Swal from "sweetalert2";
@@ -7,11 +7,12 @@ import Swal from "sweetalert2";
 const RequireAuth = ({ allowedRoles }) => {
   const { auth } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const isAllowed = auth.roles?.find((role) => allowedRoles.includes(role));
     if (!isAllowed) {
-      if (auth.accessToken) {
+      if (auth.accessToken || location.pathname == '/logout') {
         navigate(-1, { replace: true });
       } else {
         Swal.fire({
