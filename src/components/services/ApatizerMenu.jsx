@@ -98,6 +98,7 @@ const ApatizerMenu = () => {
         {/* Link ke halaman checkout */}
         <Link
           to="/checkout"
+          onClick={isLogin}
           className="text-base sm:text-2xl font-bold bg-[#F4991A] border border-[#321313] w-[120px] h-[40px] flex justify-center items-center"
         >
           <p>Next &gt;</p>

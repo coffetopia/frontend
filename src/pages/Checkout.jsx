@@ -7,6 +7,8 @@ import Buttoncash from "../components/buttoncheckout/Buttoncash";
 import TambahButton from "../components/buttonaction/TambahButton";
 import HapusButton from "../components/buttonaction/HapusButton";
 import KurangButton from "../components/buttonaction/KurangButton";
+import OrderSummary from "../components/checkout/OrderSummary";
+import PaymentMethod from "../components/checkout/PaymentMethod";  // Ensure this import is correct
 import Swal from "sweetalert2";
 
 const Checkout = () => {
@@ -33,11 +35,7 @@ const Checkout = () => {
           const updatedProducts = [...products];
           updatedProducts.splice(index, 1);
           setProducts(updatedProducts);
-          Swal.fire(
-            "Terhapus!",
-            "Pemesanan telah dihapus.",
-            "success"
-          );
+          Swal.fire("Terhapus!", "Pemesanan telah dihapus.", "success");
         }
       });
     }
@@ -145,10 +143,10 @@ const Checkout = () => {
         <div className="container py-20 px-4 sm:px-0">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-4">
-              <h3 className="text-xl text-left text-[#321313] font-bold mb-0">
+              <h3 className="text-xl text-left text-[#321313] font-bold mb-0 p-4">
                 Checkout your item now!
               </h3>
-              <div className="p-4 bg-white border-1 border-[#321313] rounded-md mt-0">
+              <div className="p-4 bg-white border border-white rounded-md mt-0">
                 <h3 className="text-3xl text-center font-bold mb-4 border-b border-gray-200">
                   Products
                 </h3>
@@ -210,7 +208,7 @@ const Checkout = () => {
                     <button
                       type="submit"
                       onClick={handleAddMenu} // Panggil fungsi handleAddMenu saat tombol diklik
-                      className="text-white bg-[#591E0A] hover:bg-[#693828] focus:ring-4 focus:outline-none focus:ring-[#a15941] font-bold rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+                      className="text-white bg-[#591E0A] hover:bg-[#693828] focus:ring-4 focus:outline-none focus:ring-[#a15941] font-bold rounded-lg text-sm w-32 sm:w-auto px-5 py-2.5 text-center"
                     >
                       Add Menu
                     </button>
@@ -219,7 +217,7 @@ const Checkout = () => {
                     <button
                       type="submit"
                       onClick={handleConfirm}
-                      className="text-white bg-[#F4991A] hover:bg-[#f6aa40] focus:ring-4 focus:outline-none focus:ring-[#facc8d] font-bold rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+                      className="text-white bg-[#F4991A] hover:bg-[#f6aa40] focus:ring-4 focus:outline-none focus:ring-[#facc8d] font-bold rounded-lg text-sm w-24 sm:w-auto px-5 py-2.5 text-center"
                     >
                       Confirm
                     </button>
@@ -228,57 +226,24 @@ const Checkout = () => {
               </div>
             </div>
             <div className="p-4">
-              <h3 className="text-xl text-left text-white font-bold mb-0">
+              <h3 className="text-xl text-left text-white font-bold mb-0 p-4">
                 Order Summary
               </h3>
+              {isConfirmed && <OrderSummary confirmedOrder={confirmedOrder} totalPrice={totalPrice} />}
+                     
+              <h3 className="text-xl text-left text-white font-bold mb-0 p-4">
+                Payment Method
+              </h3>
+              <PaymentMethod />
 
-              {isConfirmed && (
-                <div className="p-4 bg-white border-1 rounded-md w-4/5 mt-0 border-[#321313]">
-                  <table id="productTable" className="w-full">
-                    <tbody>
-                      {confirmedOrder.map((product, index) => (
-                        <tr key={index}>
-                          <td className="p-4">{product.name}</td>
-                          <td className="p-4 text-center">{product.amount}</td>
-                          <td className="p-4 text-right">{`IDR ${(product.price * product.amount).toLocaleString("id-ID")}`}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                    <tfoot>
-                      <tr className="font-bold">
-                        <td className="p-4">Total</td>
-                        <td className="p-4 text-center"></td>
-                        <td className="p-4 text-right">{`IDR ${totalPrice.toLocaleString("id-ID")}`}</td>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
-              )}
-
-              <div className="p-4 mt-4">
-                <h3 className="text-xl text-left text-white font-bold mb-0">
-                  Payment Method
-                </h3>
-                <div className="p-4 bg-white border-1 rounded-md w-4/5 mt-0 border-[#321313]">
-                  <div className="mb-4">
-                    <Buttoncard />
-                  </div>
-                  <div className="mb-4">
-                    <Buttonbank />
-                  </div>
-                  <div>
-                    <Buttoncash />
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-4 mt-4">
+                <div className="p-4 mt-4">
                 <button
                   type="submit"
-                  className="text-white bg-[#F4991A] hover:bg-[#f6aa40] focus:ring-4 focus:outline-none focus:ring-[#facc8d] font-bold rounded-lg text-sm w-full sm:w-auto px-44 py-3.5 text-center disabled:bg-opacity-100"
+                  className="text-white bg-[#F4991A] hover:bg-[#f6aa40] focus:ring-4 focus:outline-none focus:ring-[#facc8d] font-bold rounded-lg text-sm w-full sm:w-auto sm:px-56 sm:py-3.5 px-1 py-2.5 text-center disabled:bg-opacity-100"
                 >
                   Confirm and Pay
                 </button>
+              
               </div>
             </div>
           </div>
