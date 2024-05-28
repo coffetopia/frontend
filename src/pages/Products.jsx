@@ -1,5 +1,4 @@
 // Component
-import NavbarComponents from "../components/navbar/NavbarComponents";
 import ApatizerMenu from "../components/services/ApatizerMenu";
 import CoffeeMenu from "../components/services/CoffeeMenu";
 import NonCoffeeMenu from "../components/services/NonCoffeeMenu";
@@ -56,8 +55,6 @@ const ProductsApatizer = () => {
 
   return (
     <>
-      {/* Navbar */}
-      <NavbarComponents />
       <div className="flex flex-col sm:flex-row mt-8">
         {/* Favorite Menu */}
         <div className="basis-1/3 flex flex-col sm:border">

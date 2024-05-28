@@ -1,6 +1,4 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
-import AdminNavbar from "../../components/navbar/AdminNavbar";
 import BackgroundAbout from "../../components/background/BackgroundAbout";
 
 const AddProduct = () => {
@@ -12,7 +10,6 @@ const AddProduct = () => {
 
   return (
     <div className="font-poppins">
-      <AdminNavbar />
       <BackgroundAbout>
         <div className="container py-20 px-4 sm:px-0">
           <div className="p-4">

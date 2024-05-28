@@ -11,7 +11,7 @@ const useRefreshToken = () => {
       });
 
       setAuth({
-        user: localStorage.getItem('user'),
+        username: localStorage.getItem('username'),
         roles: response.data.payload.roles,
         accessToken: response.data.payload.accessToken,
       });

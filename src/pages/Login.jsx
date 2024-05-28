@@ -29,9 +29,9 @@ export default function Login() {
     e.preventDefault();
     try {
       const response = await axiosPrivate.post('/login', user);
-      localStorage.setItem('user', user.username);
+      localStorage.setItem('username', user.username);
       const { roles, accessToken } = response.data.payload;
-      setAuth({ user: localStorage.getItem('user'), roles, accessToken });
+      setAuth({ username: localStorage.getItem('user'), roles, accessToken });
       navigate(from, {replace: true});
     } catch (error) {
       console.error(error);
