@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Login from "./pages/Login";
+import Logout from "./pages/Logout";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Checkout from "./pages/Checkout";
@@ -45,6 +46,7 @@ const App = () => {
             <Route element={<RequireAuth allowedRoles={['member', 'admin']} />} >
               <Route path="checkout" element={<Checkout />} />
               <Route path="orders" element={<Orders />} />
+              <Route path="logout" element={<Logout />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={['admin']} />} >

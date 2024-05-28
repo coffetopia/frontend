@@ -10,8 +10,11 @@ import coffeeLate from "../assets/coffee-late.png";
 import americano from "../assets/americano.png";
 import cappucino from "../assets/cappucino.png";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const ProductsApatizer = () => {
+  const location = useLocation();
+  console.log(location.state);
 
   // State untuk menentukan jenis menu yang sedang ditampilkan
   const [isApatizer, setApatizer] = useState(true);

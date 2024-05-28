@@ -1,17 +1,11 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/logo1.png";
 import useAuth from "../../hooks/useAuth";
-import useLogout from "../../hooks/useLogout";
 
 // Navbar untuk pengguna yang sudah login
 const NavbarLoggedIn = () => {
-  const logout = useLogout();
-  const navigate = useNavigate();
-  const signOut = async () => {
-    await logout();
-    navigate('/login', {replace: true});
-  }
-
+  const location = useLocation();
+  
   return (
     <div className="w-full h-[70px] p-2 flex flex-row">
       {/* Logo */}
@@ -44,6 +38,7 @@ const NavbarLoggedIn = () => {
                 isActive ? "text-[#591E0A] font-bold" : " "
               }`
             }
+            state={location.pathname}
           >
             <p>Products</p>
           </NavLink>
@@ -73,7 +68,7 @@ const NavbarLoggedIn = () => {
       {/* Tombol Autentikasi */}
       <div className="basis-3/4 sm:basis-1/4">
         <div className="flex justify-center items-center font-bold h-full">
-          <NavLink to="/logout" onClick={signOut}>
+          <NavLink to="/logout">
             <div className="text-center text-xs sm:text-sm px-2 md:text-lg md:px-5 md:py-1 py-2 bg-[#F4991A] rounded-2xl mx-1 sm:mx-2">
               <p>Logout</p>
             </div>
