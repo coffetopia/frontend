@@ -18,12 +18,16 @@ const NavbarLoggedIn = () => {
     }
   };
 
+import useAuth from "../../hooks/useAuth";
+import useLogout from "../../hooks/useLogout";
+
   // Fungsi untuk logout
-  const signLogout = () => {
-    localStorage.removeItem("token"); // Menyimpan token di localStorage
-    localStorage.removeItem("username"); // Menyimpan token di localStorage
-    navigate("/login"); // Berpindah ke halaman login
-  };
+  const logout = useLogout();
+  const navigate = useNavigate();
+  const signOut = async () => {
+    await logout();
+    navigate('/login', {replace: true});
+  }
 
   return (
     <div className="w-full h-[70px] p-2 flex flex-row justify-between sm:justify-start">
@@ -125,7 +129,7 @@ const NavbarLoggedIn = () => {
       <div className="hidden sm:flex sm:basis-2/4 flex justify-center">
         <div className="items-center bg-[#fff] hidden text-sm sm:flex text-[#707070] md:text-lg font-medium">
           <NavLink
-            to="/home"
+            to="/"
             className={({ isActive }) =>
               `flex items-center px-2 md:px-6 py-2 rounded-xl ${
                 isActive ? "text-[#591E0A] font-bold" : " "
@@ -176,7 +180,7 @@ const NavbarLoggedIn = () => {
             </div>
             <p className="mx-2 text-sm md:text-base font-bold">{username}</p>
           </div>
-          <NavLink to="/login" onClick={signLogout}>
+          <NavLink to="/logout" onClick={signOut}>
             <div className="text-center text-xs sm:text-sm px-2 md:text-lg md:px-5 md:py-1 py-2 bg-[#F4991A] rounded-2xl mx-1 sm:mx-2">
               <p>Logout</p>
             </div>
@@ -359,9 +363,9 @@ const NavbarLoggedOut = () => {
 
 // Komponen Navbar utama yang akan memilih tampilan berdasarkan status login
 const NavbarComponents = () => {
-  const token = localStorage.getItem("token");
+  const { auth } = useAuth();
 
-  return <>{token ? <NavbarLoggedIn /> : <NavbarLoggedOut />}</>;
+  return <>{auth.accessToken ? <NavbarLoggedIn /> : <NavbarLoggedOut />}</>;
 };
 
 export default NavbarComponents;

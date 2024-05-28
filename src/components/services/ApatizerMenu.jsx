@@ -1,23 +1,36 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+
 // Asset
-import kulitAyam from "../../assets/kulitAyam.png";
-import lumpia from "../../assets/lumpia.png";
 import tahuGejrot from "../../assets/tahuGejrot.png";
+import useAuth from "../../hooks/useAuth";
+import axios from "../../api/axios";
 
 const ApatizerMenu = () => {
-  const navigate = useNavigate(); // untuk navigasi
-  const token = localStorage.getItem("token"); // ambil token dari localstorage
-  const username = localStorage.getItem("username"); // ambil username dari localstorage
+  const { auth } = useAuth();
+  const [menus, setMenus] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/products');
+        const products = response.data.payload;
+        setMenus(products);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   // State untuk mengelola item yang ditambahkan ke keranjang
   const [cart, setCart] = useState([]);
 
   // Fungsi untuk menangani penambahan item ke keranjang
   const handleOrderClick = (product) => {
-    if (!token && !username) {
+    if (!auth?.accessToken) {
       // Menampilkan alert jika user belum login
       Swal.fire({
         title: "Silahkan sign in untuk memesan pesanan!",
@@ -36,35 +49,13 @@ const ApatizerMenu = () => {
     }
   };
 
-  // Daftar produk apatizer
-  const products = [
-    { name: "Tahu Gejrot", price: "IDR 15.000", image: tahuGejrot },
-    { name: "Lumpia Rebung", price: "IDR 17.000", image: lumpia },
-    { name: "Kulit Ayam Krispy", price: "IDR 20.000", image: kulitAyam },
-  ];
-
-  // Fungsi untuk mengecek apakah user sudah login sebelum mengakses halaman checkout ketika mengklik next
-  const isLogin = () => {
-    if (!token && !username) {
-      Swal.fire({
-        icon: "error",
-        title: "Perlu Akses Login",
-        text: "Halaman yang anda minta memerlukan akses login. Silahkan login terlebih dahulu",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/login", { replace: true });
-        }
-      });
-    }
-  };
-
   return (
     <>
       <div className="flex sm:justify-start justify-center w-[100%]">
         <table className="table-auto">
           <tbody className="flex flex-col w-[100%]">
             {/* Loop melalui setiap produk dan tampilkan dalam bentuk baris */}
-            {products.map((product, index) => (
+            {menus.map((product, index) => (
               <tr
                 key={index}
                 className="flex w-[100%] justify-start items-center"
@@ -72,7 +63,7 @@ const ApatizerMenu = () => {
                 <td className="basis-1/4">
                   {/* Menampilkan gambar produk */}
                   <img
-                    src={product.image}
+                    src={tahuGejrot}
                     alt={product.name}
                     className="mx-2 w-[100px] sm:mx-10 my-5 sm:w-[130px]"
                   />

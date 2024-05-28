@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-import { register } from "../api";
 import COFFEE_IMAGE from "../assets/coffe.jpg";
 import LOGO_IMAGE from "../assets/logo.png";
 import InputComponents from "../components/authentication/InputComponents";
+import axios from "../api/axios";
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -25,7 +25,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await register(user); // Coba registrasi
+      const response = await axios.post('/register', user); // Coba registrasi
       Swal.fire({
         title: "Success!",
         text: "User baru berhasil ditambahkan",

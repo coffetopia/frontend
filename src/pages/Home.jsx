@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 // Component
 import NavbarComponents from "../components/navbar/NavbarComponents";
 import BannerComponents from "../components/banner/BannerComponents";
@@ -9,8 +8,6 @@ import BestCoffeeForYouComponents from "../components/services/BestCoffeeForYouC
 import bestCoffee from "../assets/best-coffee-icon.png";
 
 const Home = () => {
-  const token = localStorage.getItem("token");
-
   return (
     <div className="w-full">
       {/* Navbar Component */}
