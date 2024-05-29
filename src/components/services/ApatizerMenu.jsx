@@ -6,6 +6,8 @@ import Swal from "sweetalert2";
 import tahuGejrot from "../../assets/tahuGejrot.png";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons'; 
 
 const ApatizerMenu = () => {
   const { auth } = useAuth();
@@ -80,33 +82,51 @@ const ApatizerMenu = () => {
                     {product.price}
                   </p>
                 </td>
-                <td className="basis-1/4">
-                  {/* Tombol untuk menambahkan produk ke keranjang */}
-                  <button
-                    onClick={() => handleOrderClick(product)}
-                    className="rectangle w-[40px] h-[40px] bg-[#F4991A] border border-[#747474] mx-4 sm:mx-12 my-5"
-                  >
-                    <p className="text-2xl text-white">+</p>
-                  </button>
-                </td>
+                {auth.roles?.includes('admin')
+                  ?
+                  <td className="basis-1/4 flex justify-around p-4">
+                    <div className="flex">
+                        <button
+                            // onClick={() => handleDelete(product)}
+                            className="bg-[#F41A1A] text-black w-7 h-7 rounded mr-2"
+                        >
+                            <FontAwesomeIcon icon={faTrash} />
+                        </button>
+                        <Link to="/updateproduct">
+                            <button
+                                onClick={() => handleOrderClick(product, "edit")}
+                                className="bg-[#3fff00] text-black w-7 h-7 rounded"
+                            >
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </Link>
+                    </div>
+                  </td>
+                  :
+                  <td className="basis-1/4">
+                    {/* Tombol untuk menambahkan produk ke keranjang */}
+                    <button
+                      onClick={() => handleOrderClick(product)}
+                      className="rectangle w-[40px] h-[40px] bg-[#F4991A] border border-[#747474] mx-4 sm:mx-12 my-5"
+                    >
+                      <p className="text-2xl text-white">+</p>
+                    </button>
+                  </td>
+                }
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      {cart.length > 0
-        ?
-        <div className="flex justify-end pe-10 w-[100%] my-5">
-          {/* Link ke halaman checkout */}
-          <Link
-            to="/checkout"
-            className="text-base sm:text-2xl font-bold bg-[#F4991A] border border-[#321313] w-[120px] h-[40px] flex justify-center items-center"
-          >
-            <p>Next &gt;</p>
-          </Link>
-        </div>
-        : ''
-      }
+      <div className="flex justify-end pe-10 w-[100%] my-5">
+        {/* Link ke halaman checkout */}
+        <Link
+          to={`${auth.roles?.includes('admin') ? '/addproduct' : '/checkout'}`}
+          className="text-base sm:text-2xl font-bold bg-[#F4991A] border border-[#321313] w-[120px] h-[40px] flex justify-center items-center"
+        >
+          <p>{auth.roles?.includes('admin') ? 'Add' : 'Next'} &gt;</p>
+        </Link>
+      </div>
     </>
   );
 };
