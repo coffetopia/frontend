@@ -1,5 +1,4 @@
 // Component
-import NavbarComponents from "../components/navbar/NavbarComponents";
 import BannerComponents from "../components/banner/BannerComponents";
 import CustomerComponents from "../components/customer/CustomerComponents";
 import FooterComponents from "../components/footer/FooterComponents";
@@ -10,8 +9,6 @@ import bestCoffee from "../assets/best-coffee-icon.png";
 const Home = () => {
   return (
     <div className="w-full">
-      {/* Navbar Component */}
-      <NavbarComponents />
       {/* Landing Page */}
       <BannerComponents />
       {/* Discover Best Coffee */}

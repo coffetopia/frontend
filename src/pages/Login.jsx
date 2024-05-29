@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
 import COFFEE_IMAGE from "../assets/coffe.jpg";
 import LOGO_IMAGE from "../assets/logo.png";
 import InputComponents from "../components/authentication/InputComponents";
@@ -11,7 +10,7 @@ export default function Login() {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname == '/login' ? '/' : location.state?.from?.pathname || '/';
+  const from = location.state?.from?.pathname == '/login' || location.state?.from?.pathname == '/logout' ? '/' : location.state?.from?.pathname || '/';
   
   const [user, setUser] = useState({
     username: "",
@@ -29,9 +28,9 @@ export default function Login() {
     e.preventDefault();
     try {
       const response = await axiosPrivate.post('/login', user);
-      localStorage.setItem('user', user.username);
+      localStorage.setItem('username', user.username);
       const { roles, accessToken } = response.data.payload;
-      setAuth({ user: localStorage.getItem('user'), roles, accessToken });
+      setAuth({ username: localStorage.getItem('user'), roles, accessToken });
       navigate(from, {replace: true});
     } catch (error) {
       console.error(error);
@@ -39,10 +38,17 @@ export default function Login() {
   }
 
   useEffect(() => {
-    if(auth.accessToken) {
+    console.log(auth);
+    if(localStorage.getItem('username')) {
       navigate(from, {replace: true});
     }
-  }, [navigate, auth.accessToken, from]);
+    // if(auth.accessToken) {
+    //   navigate(from, {replace: true});
+    //   if(!from == '/logout') {
+    //     navigate(from, {replace: true});
+    //   }
+    // }
+  }, []);
 
   return (
     <div className="h-screen mx-auto flex flex-col md:flex-row font-sans">

@@ -1,5 +1,4 @@
 // Component
-import AdminNavbar from "../../components/navbar/AdminNavbar";
 import ApatizerAdmin from "../../components/AdminServices/ApatizerAdmin";
 import CoffeeAdmin from "../../components/AdminServices/CoffeeAdmin";
 import NonCoffeeAdmin from "../../components/AdminServices/NonCoffeeAdmin";
@@ -11,9 +10,6 @@ import coffeeLate from "../../assets/coffee-late.png";
 import americano from "../../assets/americano.png";
 import cappucino from "../../assets/cappucino.png";
 import { useState } from "react";
-
-
-import { Link } from "react-router-dom";
 
 const ProductsAdmin = () => {
   // State untuk menentukan jenis menu yang sedang ditampilkan
@@ -56,8 +52,6 @@ const ProductsAdmin = () => {
 
   return (
     <>
-      {/* Navbar */}
-      <AdminNavbar />
       <div className="flex flex-col sm:flex-row mt-8">
         {/* Favorite Menu */}
         <div className="basis-1/3 flex flex-col sm:border">

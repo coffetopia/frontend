@@ -6,11 +6,10 @@ export default function useLogout() {
   const { setAuth } = useAuth();
 
   const logout = async () => {
-    setAuth({});
     try {
-      const response = await axiosPrivate.delete('/logout');
-      localStorage.removeItem('authorization');
-      console.log(response);
+      setAuth({});
+      await axiosPrivate.delete('/logout');
+      localStorage.removeItem('username');
     } catch (error) {
       console.error(error);
     }

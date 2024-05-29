@@ -1,5 +1,3 @@
-// src/pages/NotFound.jsx
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import BackgroundAbout from '../components/background/BackgroundAbout';
 

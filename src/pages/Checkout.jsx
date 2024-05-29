@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import NavbarComponents from "../components/navbar/NavbarComponents";
 import COFFEE_IMAGE from "../assets/coffe.jpg";
 import Buttoncard from "../components/buttoncheckout/Buttoncard";
 import Buttonbank from "../components/buttoncheckout/Buttonbank";
@@ -131,7 +130,6 @@ const Checkout = () => {
 
   return (
     <div className="font-poppins">
-      <NavbarComponents />
       <div
         className="min-h-screen bg-cover bg-center flex justify-center items-start text-[#321313]"
         style={{

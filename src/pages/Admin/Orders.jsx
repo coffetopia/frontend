@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import BackgroundAbout from "../../components/background/BackgroundAbout";
-import AdminNavbar from "../../components/navbar/AdminNavbar";
 
 const Orders = () => {
   const [products, setProducts] = useState([
@@ -26,7 +25,6 @@ const Orders = () => {
 
   return (
     <div className="font-poppins">
-      <AdminNavbar />
       <BackgroundAbout>
         <div className="container py-20 px-4 sm:px-0">
           <div className="p-4 bg-white border-1 border-[#321313] rounded-md mt-0 mx-auto">
