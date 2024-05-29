@@ -1,18 +1,30 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo1.png";
 import person from "../../assets/person.png";
 import { useState } from "react";
 import useAuth from '../../hooks/useAuth';
 import Navlink from "./Navlink";
+import useLogout from "../../hooks/useLogout";
   
 const Navbar = () => {
   const { auth } = useAuth();
   const location = useLocation();
   const username = localStorage.getItem("username");
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const logout = useLogout();
+  const navigate = useNavigate();
   
   // // Fungsi untuk membuka/menutup menu hamburger
   const openHamburger = () => setIsNavOpen(isNavOpen => !isNavOpen);
+
+  const signOut = async () => {
+    try {
+      await logout();
+      navigate('/login', {state: {from: {pathname: '/logout'}}});
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className="w-full h-[70px] p-2 flex flex-row justify-between sm:justify-start">
@@ -115,7 +127,8 @@ const Navbar = () => {
               </div>
               <p className="mx-2 text-sm md:text-base font-bold">{username}</p>
             </div>
-            <NavLink to="/logout" state={{ from: location.pathname }}>
+            {/* <NavLink to="/logout"> */}
+            <NavLink onClick={signOut}>
               <div className="text-center text-xs sm:text-sm px-2 md:text-lg md:px-5 md:py-1 py-2 bg-[#F4991A] rounded-2xl mx-1 sm:mx-2">
                 <p>Logout</p>
               </div>

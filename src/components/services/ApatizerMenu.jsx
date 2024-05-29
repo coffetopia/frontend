@@ -94,16 +94,19 @@ const ApatizerMenu = () => {
           </tbody>
         </table>
       </div>
-      <div className="flex justify-end pe-10 w-[100%] my-5">
-        {/* Link ke halaman checkout */}
-        <Link
-          to="/checkout"
-          onClick={isLogin}
-          className="text-base sm:text-2xl font-bold bg-[#F4991A] border border-[#321313] w-[120px] h-[40px] flex justify-center items-center"
-        >
-          <p>Next &gt;</p>
-        </Link>
-      </div>
+      {cart.length > 0
+        ?
+        <div className="flex justify-end pe-10 w-[100%] my-5">
+          {/* Link ke halaman checkout */}
+          <Link
+            to="/checkout"
+            className="text-base sm:text-2xl font-bold bg-[#F4991A] border border-[#321313] w-[120px] h-[40px] flex justify-center items-center"
+          >
+            <p>Next &gt;</p>
+          </Link>
+        </div>
+        : ''
+      }
     </>
   );
 };

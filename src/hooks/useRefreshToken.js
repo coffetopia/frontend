@@ -1,14 +1,12 @@
 import useAuth from "./useAuth";
-import axios from "../api/axios";
+import { axiosPrivate } from "../api/axios";
 
 const useRefreshToken = () => {
   const { setAuth } = useAuth();
 
   const refresh = async () => {
     try {
-      const response = await axios.get('/token', {
-        withCredentials: true,
-      });
+      const response = await axiosPrivate.get('/token');
 
       setAuth({
         username: localStorage.getItem('username'),

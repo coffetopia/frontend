@@ -14,7 +14,9 @@ export default function Navlink({ pathname, text, type }) {
           isActive ? "text-[#591E0A] font-bold" : " "
         }`
       }
-      state={{ from: location.pathname }}
+      state={{ from: {
+        pathname: location.pathname,
+      } }}
     >
       <p>{text}</p>
     </NavLink>
