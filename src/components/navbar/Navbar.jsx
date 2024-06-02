@@ -5,7 +5,7 @@ import { useState } from "react";
 import useAuth from '../../hooks/useAuth';
 import Navlink from "./Navlink";
 import useLogout from "../../hooks/useLogout";
-  
+
 const Navbar = () => {
   const { auth } = useAuth();
   const location = useLocation();
@@ -13,8 +13,8 @@ const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const logout = useLogout();
   const navigate = useNavigate();
-  
-  // // Fungsi untuk membuka/menutup menu hamburger
+
+  // Fungsi untuk membuka/menutup menu hamburger
   const openHamburger = () => setIsNavOpen(isNavOpen => !isNavOpen);
 
   const signOut = async () => {
@@ -70,10 +70,19 @@ const Navbar = () => {
               <div className="line w-[20px] h-[2px] bg-[#e5e7eb] origin-center rotate-45"></div>
               <div className="line w-[20px] h-[2px] bg-[#e5e7eb] origin-center -rotate-45 -translate-y-2/3"></div>
             </button>
-            <Navlink pathname={'/'} text={'Home'} type={'burger'} />
-            <Navlink pathname={'/products'} text={'Products'} type={'burger'} />
-            <Navlink pathname={'/checkout'} text={'Checkout'} type={'burger'} />
-            <Navlink pathname={'/about'} text={'About'} type={'burger'} />
+            {auth.roles?.includes('admin') ? (
+              <>
+                <Navlink pathname={'/products'} text={'Products'} type={'burger'} />
+                <Navlink pathname={'/orders'} text={'Orders'} type={'burger'} />
+              </>
+            ) : (
+              <>
+                <Navlink pathname={'/'} text={'Home'} type={'burger'} />
+                <Navlink pathname={'/products'} text={'Products'} type={'burger'} />
+                <Navlink pathname={'/checkout'} text={'Checkout'} type={'burger'} />
+                <Navlink pathname={'/about'} text={'About'} type={'burger'} />
+              </>
+            )}
             {auth.accessToken
               ?
               <div className="flex justify-center items-center font-bold h-full mt-4">
@@ -106,13 +115,19 @@ const Navbar = () => {
       {/* Navigasi */}
       <div className="hidden sm:flex sm:basis-2/4 sm:justify-center">
         <div className="items-center bg-[#fff] hidden text-sm sm:flex text-[#707070] md:text-lg font-medium">
-          <Navlink pathname={'/'} text={"Home"} />
-          <Navlink pathname={'/products'} text={'Products'} />
-          {auth.roles?.includes('admin')
-            ? <Navlink pathname={'/orders'} text={'Orders'} />
-            : <Navlink pathname={'/checkout'} text={'Checkout'} />
-          }
-          <Navlink pathname={'/about'} text={'About'} />
+          {auth.roles?.includes('admin') ? (
+            <>
+              <Navlink pathname={'/products'} text={'Products'} />
+              <Navlink pathname={'/orders'} text={'Orders'} />
+            </>
+          ) : (
+            <>
+              <Navlink pathname={'/'} text={"Home"} />
+              <Navlink pathname={'/products'} text={'Products'} />
+              <Navlink pathname={'/checkout'} text={'Checkout'} />
+              <Navlink pathname={'/about'} text={'About'} />
+            </>
+          )}
         </div>
       </div>
 
@@ -127,7 +142,6 @@ const Navbar = () => {
               </div>
               <p className="mx-2 text-sm md:text-base font-bold">{username}</p>
             </div>
-            {/* <NavLink to="/logout"> */}
             <NavLink onClick={signOut}>
               <div className="text-center text-xs sm:text-sm px-2 md:text-lg md:px-5 md:py-1 py-2 bg-[#F4991A] rounded-2xl mx-1 sm:mx-2">
                 <p>Logout</p>

@@ -10,7 +10,8 @@ export default function Login() {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname == '/login' || location.state?.from?.pathname == '/logout' ? '/' : location.state?.from?.pathname || '/';
+  const from = location.state?.from?.pathname === '/login' || location.state?.from?.pathname === '/logout' ? '/' : location.state?.from?.pathname || '/';
+
   
   const [user, setUser] = useState({
     username: "",
@@ -30,8 +31,13 @@ export default function Login() {
       const response = await axiosPrivate.post('/login', user);
       localStorage.setItem('username', user.username);
       const { roles, accessToken } = response.data.payload;
-      setAuth({ username: localStorage.getItem('user'), roles, accessToken });
-      navigate(from, {replace: true});
+      setAuth({ username: localStorage.getItem('username'), roles, accessToken });
+
+      if (roles.includes('admin')) {
+        navigate('/products', { replace: true });
+      } else {
+        navigate(from, { replace: true });
+      }
     } catch (error) {
       console.error(error);
     }
