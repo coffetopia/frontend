@@ -5,7 +5,7 @@ const AddProduct = () => {
   const navigate = useNavigate();
 
   const handleCancel = () => {
-    navigate('/adminproduct');
+    navigate('/products');
   };
 
   return (

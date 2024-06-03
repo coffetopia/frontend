@@ -36,7 +36,7 @@ export default function Login() {
       if (roles.includes('admin')) {
         navigate('/products', { replace: true });
       } else {
-        navigate(from, { replace: true });
+        navigate('/', { replace: true });
       }
     } catch (error) {
       console.error(error);
@@ -44,17 +44,22 @@ export default function Login() {
   }
 
   useEffect(() => {
-    console.log(auth);
     if(localStorage.getItem('username')) {
-      navigate(from, {replace: true});
+      const storedRoles = auth?.roles || [];
+      if (storedRoles.includes('admin')) {
+        navigate('/products', { replace: true });
+      } else {
+        navigate('/', { replace: true });
+      }
     }
+  }, [auth, navigate]);
     // if(auth.accessToken) {
     //   navigate(from, {replace: true});
     //   if(!from == '/logout') {
     //     navigate(from, {replace: true});
     //   }
     // }
-  }, []);
+  
 
   return (
     <div className="h-screen mx-auto flex flex-col md:flex-row font-sans">
