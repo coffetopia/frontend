@@ -7,7 +7,7 @@ import TambahButton from "../components/buttonaction/TambahButton";
 import HapusButton from "../components/buttonaction/HapusButton";
 import KurangButton from "../components/buttonaction/KurangButton";
 import OrderSummary from "../components/checkout/OrderSummary";
-import PaymentMethod from "../components/checkout/PaymentMethod";  // Ensure this import is correct
+import PaymentMethod from "../components/checkout/PaymentMethod"; // Ensure this import is correct
 import Swal from "sweetalert2";
 
 const Checkout = () => {
@@ -39,7 +39,7 @@ const Checkout = () => {
       });
     }
   };
-  
+
   const handleTambah = (index) => {
     if (!isConfirmed) {
       const updatedProducts = [...products];
@@ -61,7 +61,7 @@ const Checkout = () => {
   };
 
   const handleAddMenu = () => {
-    navigate('/products'); // Navigasi kembali ke halaman produk
+    navigate("/products"); // Navigasi kembali ke halaman produk
   };
 
   // State untuk menyimpan pesanan yang sudah dikonfirmasi
@@ -124,7 +124,9 @@ const Checkout = () => {
     }
 
     if (totalPriceElement) {
-      totalPriceElement.textContent = `IDR ${totalPrice.toLocaleString("id-ID")}`;
+      totalPriceElement.textContent = `IDR ${totalPrice.toLocaleString(
+        "id-ID"
+      )}`;
     }
   }, [products]);
 
@@ -177,7 +179,12 @@ const Checkout = () => {
                   </tbody>
                 </table>
                 <div className="flex items-center space-x-2 mt-8">
-                  <label htmlFor="tableNumber" className="text-sm text-[#321313]">Table no :</label>
+                  <label
+                    htmlFor="tableNumber"
+                    className="text-sm text-[#321313]"
+                  >
+                    Table no :
+                  </label>
                   <select
                     id="tableNumber"
                     className="bg-white border border-[#321313] text-[#321313] text-xs rounded-md p-1 w-52"
@@ -227,21 +234,25 @@ const Checkout = () => {
               <h3 className="text-xl text-left text-white font-bold mb-0 p-4">
                 Order Summary
               </h3>
-              {isConfirmed && <OrderSummary confirmedOrder={confirmedOrder} totalPrice={totalPrice} />}
-                     
+              {isConfirmed && (
+                <OrderSummary
+                  confirmedOrder={confirmedOrder}
+                  totalPrice={totalPrice}
+                />
+              )}
+
               <h3 className="text-xl text-left text-white font-bold mb-0 p-4">
                 Payment Method
               </h3>
               <PaymentMethod />
 
-                <div className="p-4 mt-4">
+              <div className="p-4 mt-4">
                 <button
                   type="submit"
-                  className="text-white bg-[#F4991A] hover:bg-[#f6aa40] focus:ring-4 focus:outline-none focus:ring-[#facc8d] font-bold rounded-lg text-sm w-full sm:w-auto sm:px-56 sm:py-3.5 px-1 py-2.5 text-center disabled:bg-opacity-100"
+                  className="text-white bg-[#F4991A] hover:bg-[#f6aa40] focus:ring-4 focus:outline-none focus:ring-[#facc8d] font-bold rounded-lg text-sm w-full sm:w-auto sm:px-40 sm:py-3.5 px-1 py-2.5 text-center disabled:bg-opacity-100"
                 >
                   Confirm and Pay
                 </button>
-              
               </div>
             </div>
           </div>
