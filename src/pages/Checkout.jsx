@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
 import COFFEE_IMAGE from "../assets/coffe.jpg";
-import Buttoncard from "../components/buttoncheckout/Buttoncard";
-import Buttonbank from "../components/buttoncheckout/Buttonbank";
-import Buttoncash from "../components/buttoncheckout/Buttoncash";
 import TambahButton from "../components/buttonaction/TambahButton";
 import HapusButton from "../components/buttonaction/HapusButton";
 import KurangButton from "../components/buttonaction/KurangButton";

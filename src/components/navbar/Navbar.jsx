@@ -74,6 +74,7 @@ const Navbar = () => {
               <>
                 <Navlink pathname={'/products'} text={'Products'} type={'burger'} />
                 <Navlink pathname={'/orders'} text={'Orders'} type={'burger'} />
+                <Navlink pathname={'/report'} text={'Report'} type={'burger'}  />
               </>
             ) : (
               <>
@@ -119,6 +120,7 @@ const Navbar = () => {
             <>
               <Navlink pathname={'/products'} text={'Products'} />
               <Navlink pathname={'/orders'} text={'Orders'} />
+              <Navlink pathname={'/report'} text={'Report'} />
             </>
           ) : (
             <>

@@ -13,6 +13,7 @@ import AdminProduct from "./pages/Admin/AdminProduct"; // Pastikan hanya ada sat
 import AddProduct from "./pages/Admin/AddProduct";
 import UpdateProduct from "./pages/Admin/UpdateProduct";
 import Orders from "./pages/Admin/Orders"; // Pastikan deklarasi Orders tidak tumpang tindih dengan AdminProduct
+import Report from "./pages/Admin/Report";
 import Layout from "./pages/Layout";
 import NotFound from "./pages/NotFound";
 import RequireAuth from "./pages/RequireAuth";
@@ -54,6 +55,7 @@ const App = () => {
               <Route path="adminproduct" element={<AdminProduct />} />
               <Route path="addproduct" element={<AddProduct />} />
               <Route path="updateproduct" element={<UpdateProduct />} />
+              <Route path="report" element={<Report />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Route>
