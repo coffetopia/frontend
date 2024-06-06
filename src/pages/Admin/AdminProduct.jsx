@@ -1,15 +1,14 @@
-// Component
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import ApatizerAdmin from "../../components/AdminServices/ApatizerAdmin";
 import CoffeeAdmin from "../../components/AdminServices/CoffeeAdmin";
 import NonCoffeeAdmin from "../../components/AdminServices/NonCoffeeAdmin";
 import FoodsAdmin from "../../components/AdminServices/FoodsAdmin";
 
-
 // Asset
 import coffeeLate from "../../assets/coffee-late.png";
 import americano from "../../assets/americano.png";
 import cappucino from "../../assets/cappucino.png";
-import { useState } from "react";
 
 const ProductsAdmin = () => {
   // State untuk menentukan jenis menu yang sedang ditampilkan
@@ -94,7 +93,7 @@ const ProductsAdmin = () => {
               className={`text-base sm:text-lg ${
                 isApatizer
                   ? "font-medium text-[#591E0A] border-b border-[#591E0A]"
-                  : " "
+                  : ""
               }`}
               onClick={handleApatizer}
             >
@@ -104,43 +103,44 @@ const ProductsAdmin = () => {
               className={`text-base sm:text-lg ${
                 isCoffee
                   ? "font-medium text-[#591E0A] border-b border-[#591E0A]"
-                  : " "
+                  : ""
               }`}
               onClick={handleCoffee}
             >
               <p>Coffee</p>
             </button>
             <button
-              to="/products"
               className={`text-base sm:text-lg ${
                 isNonCoffee
                   ? "font-medium text-[#591E0A] border-b border-[#591E0A]"
-                  : " "
+                  : ""
               }`}
               onClick={handleNonCoffee}
             >
               <p>Non Coffee</p>
             </button>
             <button
-              to="/products"
               className={`text-base sm:text-lg ${
                 isFoods
                   ? "font-medium text-[#591E0A] border-b border-[#591E0A]"
-                  : " "
+                  : ""
               }`}
               onClick={handleFoods}
             >
               <p>Foods</p>
             </button>
+            <Link to="/addcategory" className="text-base font-bold bg-[#F4991A] border-1 border-[#321313] rounded-md px-[10px] py-[5px] flex justify-center items-center">
+          <p>Add Category +</p>
+        </Link>
+
           </div>
           {/* Menu */}
-          {isApatizer ? <ApatizerAdmin /> : ""}
-          {isCoffee ? <CoffeeAdmin /> : ""}
-          {isNonCoffee ? <NonCoffeeAdmin /> : ""}
-          {isFoods ? <FoodsAdmin /> : ""}
+          {isApatizer && <ApatizerAdmin />}
+          {isCoffee && <CoffeeAdmin />}
+          {isNonCoffee && <NonCoffeeAdmin />}
+          {isFoods && <FoodsAdmin />}
         </div>
       </div>
-      
     </>
   );
 };
