@@ -2,14 +2,13 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo1.png";
 import person from "../../assets/person.png";
 import { useState } from "react";
-import useAuth from '../../hooks/useAuth';
 import Navlink from "./Navlink";
 import useLogout from "../../hooks/useLogout";
 
 const Navbar = () => {
-  const { auth } = useAuth();
   const location = useLocation();
   const username = localStorage.getItem("username");
+  const role = localStorage.getItem("role");
   const [isNavOpen, setIsNavOpen] = useState(false);
   const logout = useLogout();
   const navigate = useNavigate();
@@ -70,7 +69,7 @@ const Navbar = () => {
               <div className="line w-[20px] h-[2px] bg-[#e5e7eb] origin-center rotate-45"></div>
               <div className="line w-[20px] h-[2px] bg-[#e5e7eb] origin-center -rotate-45 -translate-y-2/3"></div>
             </button>
-            {auth.roles?.includes('admin') ? (
+            {role == 'admin' ? (
               <>
                 <Navlink pathname={'/products'} text={'Products'} type={'burger'} />
                 <Navlink pathname={'/orders'} text={'Orders'} type={'burger'} />
@@ -84,7 +83,7 @@ const Navbar = () => {
                 <Navlink pathname={'/about'} text={'About'} type={'burger'} />
               </>
             )}
-            {auth.accessToken
+            {username
               ?
               <div className="flex justify-center items-center font-bold h-full mt-4">
                 <NavLink to="/logout" state={{ from: location.pathname }}>
@@ -116,7 +115,7 @@ const Navbar = () => {
       {/* Navigasi */}
       <div className="hidden sm:flex sm:basis-2/4 sm:justify-center">
         <div className="items-center bg-[#fff] hidden text-sm sm:flex text-[#707070] md:text-lg font-medium">
-          {auth.roles?.includes('admin') ? (
+          {role == 'admin' ? (
             <>
               <Navlink pathname={'/products'} text={'Products'} />
               <Navlink pathname={'/orders'} text={'Orders'} />
@@ -134,7 +133,7 @@ const Navbar = () => {
       </div>
 
       {/* Tombol Autentikasi */}
-      {auth.accessToken
+      {username
         ?
         <div className="hidden sm:block basis-3/4 sm:basis-1/4">
           <div className="flex justify-center items-center font-bold h-full">

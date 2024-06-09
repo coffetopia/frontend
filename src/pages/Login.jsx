@@ -1,18 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import COFFEE_IMAGE from "../assets/coffe.jpg";
 import LOGO_IMAGE from "../assets/logo.png";
 import InputComponents from "../components/authentication/InputComponents";
-import { axiosPrivate } from "../api/axios";
-import useAuth from "../hooks/useAuth";
+import axios from "../api/axios";
+import Swal from "sweetalert2";
 
 export default function Login() {
-  const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname === '/login' || location.state?.from?.pathname === '/logout' ? '/' : location.state?.from?.pathname || '/';
-
-  
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -28,38 +23,33 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosPrivate.post('/login', user);
+      const response = await axios.post('/login', user);
       localStorage.setItem('username', user.username);
-      const { roles, accessToken } = response.data.payload;
-      setAuth({ username: localStorage.getItem('username'), roles, accessToken });
-
-      if (roles.includes('admin')) {
+      localStorage.setItem('role', response.data.payload.role);
+      if (response.data.payload.role == 'admin') {
         navigate('/products', { replace: true });
       } else {
         navigate('/', { replace: true });
       }
     } catch (error) {
       console.error(error);
+      Swal.fire({
+        title: error.response.data.message,
+        text: 'username atau password salah',
+        icon: 'error',
+      });
     }
   }
 
   useEffect(() => {
     if(localStorage.getItem('username')) {
-      const storedRoles = auth?.roles || [];
-      if (storedRoles.includes('admin')) {
+      if (localStorage.getItem('role') == 'admin') {
         navigate('/products', { replace: true });
       } else {
         navigate('/', { replace: true });
       }
     }
-  }, [auth, navigate]);
-    // if(auth.accessToken) {
-    //   navigate(from, {replace: true});
-    //   if(!from == '/logout') {
-    //     navigate(from, {replace: true});
-    //   }
-    // }
-  
+  }, [navigate]);
 
   return (
     <div className="h-screen mx-auto flex flex-col md:flex-row font-sans">

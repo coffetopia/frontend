@@ -10,6 +10,7 @@ export default function useLogout() {
       setAuth({});
       await axiosPrivate.delete('/logout');
       localStorage.removeItem('username');
+      localStorage.removeItem('role');
     } catch (error) {
       console.error(error);
     }
