@@ -15,7 +15,7 @@ const BannerComponents = () => {
             {/* Menampilkan jumlah staff */}
             <div className="flex justify-center items-center">
               <div className="icon-content relative">
-                <div className="eclipse bg-[#F4991A] w-[40px] h-[40px] sm:w-[65px] sm:h-[65px] rounded-full flex justify-center items-center">
+                <div className="eclipse bg-secondary w-[40px] h-[40px] sm:w-[65px] sm:h-[65px] rounded-full flex justify-center items-center">
                   <img src={person} alt="" className="w-[20px] sm:w-[30px]" />
                 </div>
               </div>
@@ -30,7 +30,7 @@ const BannerComponents = () => {
             <div className="hidden sm:block line w-[2px] h-[120px] bg-[#D9D9D9]"></div>
             <div className="flex justify-center items-center">
               <div className="icon-content relative">
-                <div className="eclipse bg-[#F4991A] w-[40px] h-[40px] sm:w-[65px] sm:h-[65px] rounded-full flex justify-center items-center">
+                <div className="eclipse bg-secondary w-[40px] h-[40px] sm:w-[65px] sm:h-[65px] rounded-full flex justify-center items-center">
                   <img src={heart} alt="" className="w-[25px] sm:w-[43px]" />
                 </div>
               </div>
@@ -45,7 +45,7 @@ const BannerComponents = () => {
           <div className="basis-1/3 flex ms-20 sm:m-0 sm:justify-center items-center">
             <div className="flex justify-center items-center">
               <div className="icon-content relative">
-                <div className="eclipse bg-[#F4991A] w-[40px] h-[40px] sm:w-[65px] sm:h-[65px] rounded-full flex justify-center items-center">
+                <div className="eclipse bg-secondary w-[40px] h-[40px] sm:w-[65px] sm:h-[65px] rounded-full flex justify-center items-center">
                   <img src={maps} alt="" className="w-[25px] sm:w-[45px]" />
                 </div>
               </div>

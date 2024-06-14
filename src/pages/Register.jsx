@@ -26,13 +26,20 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post('/register', user); // Coba registrasi
+      if (!response.status) {
+        Swal.fire({
+          title: "Error!",
+          text: "Email atau Password Salah",
+          icon: "error",
+          confirmButtonText: "Ok",
+        }); // Menampilkan alert jika registrasi gagal
+      }
       Swal.fire({
         title: "Success!",
         text: "User baru berhasil ditambahkan",
         icon: "success",
         confirmButtonText: "Ok",
       }); // Menampilkan alert jika registrasi berhasil
-      console.log(response);
       navigate("/login"); // Setelah user berhasil registrasi, akan dipindahkan ke halaman login
     } catch (error) {
       Swal.fire({

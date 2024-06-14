@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { NavLink, useLocation } from "react-router-dom";
 
 export default function Navlink({ pathname, text, type }) {
@@ -11,7 +12,7 @@ export default function Navlink({ pathname, text, type }) {
         : 'flex items-center px-2 md:px-6 py-2 rounded-xl'
         }
         ${
-          isActive ? "text-[#591E0A] font-bold" : " "
+          isActive ? "text-primary font-bold" : " "
         }`
       }
       state={{ from: {

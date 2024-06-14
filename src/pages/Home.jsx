@@ -11,6 +11,7 @@ const Home = () => {
     <div className="w-full">
       {/* Landing Page */}
       <BannerComponents />
+
       {/* Discover Best Coffee */}
       <div className="flex flex-col sm:flex-row w-full my-7 sm:my-10 sm:py-7">
         <div className="best-coffee-icon basis-1/2 flex justify-center items-center">
