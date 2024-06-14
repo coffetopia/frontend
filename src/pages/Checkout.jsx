@@ -15,9 +15,6 @@ const Checkout = () => {
   const cart = location?.state;
 
   useEffect(() => {
-    // if (localStorage.getItem('user') === null) {
-    //   navigate('/login');
-    // }
     setProducts(cart);
   }, [cart, products]);
 
@@ -164,25 +161,22 @@ const Checkout = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {/* {cart.leght > 0 ?  */}
-                     { cart.map((product, index) => (
-                        <tr key={index}>
-                          <td className="p-4">{product.name}</td>
-                          <td className="p-5 flex items-center">
-                            <KurangButton onClick={() => handleKurang(index)} />
-                            {product.quantity}
-                            <TambahButton onClick={() => handleTambah(index)} />
-                          </td>
-                          <td className="p-4">{`IDR ${product.price.toLocaleString(
-                            "id-ID"
-                          )}`}</td>
-                          <td className="p-4 flex justify-start items-center">
-                            <HapusButton onClick={() => handleDelete(index)} />
-                          </td>
-                        </tr>
-                      )) 
-                      // )) : ''
-                    }
+                    {cart.length > 0 ? cart.map((product, index) => (
+                      <tr key={index}>
+                        <td className="p-4">{product.name}</td>
+                        <td className="p-5 flex items-center">
+                          <KurangButton onClick={() => handleKurang(index)} />
+                          {product.quantity}
+                          <TambahButton onClick={() => handleTambah(index)} />
+                        </td>
+                        <td className="p-4">{`IDR ${product.price.toLocaleString(
+                          "id-ID"
+                        )}`}</td>
+                        <td className="p-4 flex justify-start items-center">
+                          <HapusButton onClick={() => handleDelete(index)} />
+                        </td>
+                      </tr>
+                    )) : ''}
                   </tbody>
                 </table>
                 <div className="flex items-center space-x-2 mt-8">
