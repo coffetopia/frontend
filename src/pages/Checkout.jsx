@@ -6,13 +6,20 @@ import KurangButton from "../components/buttonaction/KurangButton";
 import OrderSummary from "../components/checkout/OrderSummary";
 import PaymentMethod from "../components/checkout/PaymentMethod"; // Ensure this import is correct
 import Swal from "sweetalert2";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Checkout = () => {
-  const [products, setProducts] = useState([
-    { name: "Product 1", amount: 1, price: 10000 },
-    { name: "Product 2", amount: 2, price: 20000 },
-    { name: "Product 3", amount: 3, price: 30000 },
-  ]);
+  const [products, setProducts] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const cart = location?.state;
+
+  useEffect(() => {
+    // if (localStorage.getItem('user') === null) {
+    //   navigate('/login');
+    // }
+    setProducts(cart);
+  }, [cart, products]);
 
   const [tableNumber, setTableNumber] = useState(""); // State for table number
 
@@ -40,7 +47,7 @@ const Checkout = () => {
   const handleTambah = (index) => {
     if (!isConfirmed) {
       const updatedProducts = [...products];
-      updatedProducts[index].amount += 1;
+      updatedProducts[index].quantity += 1;
       setProducts(updatedProducts);
     }
   };
@@ -48,8 +55,8 @@ const Checkout = () => {
   const handleKurang = (index) => {
     if (!isConfirmed) {
       const updatedProducts = [...products];
-      if (updatedProducts[index].amount > 1) {
-        updatedProducts[index].amount -= 1;
+      if (updatedProducts[index].quantity > 1) {
+        updatedProducts[index].quantity -= 1;
       } else {
         updatedProducts.splice(index, 1);
       }
@@ -79,7 +86,7 @@ const Checkout = () => {
       // Hitung total harga
       let totalPrice = 0;
       products.forEach((product) => {
-        totalPrice += product.price * product.amount;
+        totalPrice += parseInt(product.price, 10) * parseInt(product.quantity, 10);
       });
 
       // Set state untuk total harga dan status konfirmasi
@@ -157,22 +164,25 @@ const Checkout = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {products.map((product, index) => (
-                      <tr key={index}>
-                        <td className="p-4">{product.name}</td>
-                        <td className="p-5 flex items-center">
-                          <KurangButton onClick={() => handleKurang(index)} />
-                          {product.amount}
-                          <TambahButton onClick={() => handleTambah(index)} />
-                        </td>
-                        <td className="p-4">{`IDR ${product.price.toLocaleString(
-                          "id-ID"
-                        )}`}</td>
-                        <td className="p-4 flex justify-start items-center">
-                          <HapusButton onClick={() => handleDelete(index)} />
-                        </td>
-                      </tr>
-                    ))}
+                    {/* {cart.leght > 0 ?  */}
+                     { cart.map((product, index) => (
+                        <tr key={index}>
+                          <td className="p-4">{product.name}</td>
+                          <td className="p-5 flex items-center">
+                            <KurangButton onClick={() => handleKurang(index)} />
+                            {product.quantity}
+                            <TambahButton onClick={() => handleTambah(index)} />
+                          </td>
+                          <td className="p-4">{`IDR ${product.price.toLocaleString(
+                            "id-ID"
+                          )}`}</td>
+                          <td className="p-4 flex justify-start items-center">
+                            <HapusButton onClick={() => handleDelete(index)} />
+                          </td>
+                        </tr>
+                      )) 
+                      // )) : ''
+                    }
                   </tbody>
                 </table>
                 <div className="flex items-center space-x-2 mt-8">
