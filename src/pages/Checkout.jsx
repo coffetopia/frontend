@@ -19,6 +19,7 @@ const Checkout = () => {
   }, [cart, products]);
 
   const [tableNumber, setTableNumber] = useState(""); // State for table number
+  const [diningOption, setDiningOption] = useState("");
 
   const handleDelete = (index) => {
     if (!isConfirmed) {
@@ -200,6 +201,25 @@ const Checkout = () => {
                     {/* Tambahkan pilihan meja lainnya jika perlu */}
                   </select>
                 </div>
+                <div className="flex items-center space-x-2 mt-4">
+                  <label
+                    htmlFor="diningOption"
+                    className="text-sm text-[#321313]"
+                  >
+                    Dining Option:
+                  </label>
+                  <select
+                    id="diningOption"
+                    className="bg-white border border-[#321313] text-[#321313] text-xs rounded-md p-1 w-44"
+                    value={diningOption}
+                    onChange={(e) => setDiningOption(e.target.value)}
+                    required
+                    >
+                  <option value="">Select an option</option>
+                    <option value="dine-in">Dine In</option>
+                    <option value="take-away">Take Away</option>
+                  </select>
+                  </div>
                 <div className="flex flex-col space-y-2 mt-4">
                   <input
                     type="text"

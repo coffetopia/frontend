@@ -32,15 +32,22 @@ const Orders = () => {
             <h3 className="text-2xl text-center font-bold mb-4 border-b border-gray-200">
               Products
             </h3>
-            <h3 className="text-37 text-left font-bold">
-              Order ID: 1
-            </h3>
-            <h3 className="text-37 text-left font-bold">
-            Name: 
-          </h3>
-            <h3 className="text-47 text-left font-bold mb-4">
-              Meja no :
-            </h3>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-37 text-left font-bold">
+                Order ID: 1
+              </h3>
+              <h3 className="text-37 text-right font-bold">
+                Take Away
+              </h3>
+            </div>
+            <div className="flex flex-col text-left font-bold mb-4">
+              <h3 className="text-37">
+                Name: 
+              </h3>
+              <h3 className="text-47">
+                Meja no :
+              </h3>
+            </div>
             <table className="w-full" id="productTable">
               <thead>
                 <tr>
@@ -105,17 +112,16 @@ const Orders = () => {
               </tbody>
             </table>
             <div className="flex justify-center">
-  <button 
-    onClick={handlePrint}
-    className="w-24 text-[#321313] font-bold bg-[#F4991A] rounded-md p-2 md:p-2 text-center flex items-center justify-center mt-4 mr-auto"
-  >
-    Print
-  </button>
-  <Link to="/report" className="w-24 text-[#321313] font-bold bg-[#F4991A] rounded-md p-2 md:p-2 text-center flex items-center justify-center mt-4 ml-auto">
-    Report
-  </Link>
-</div>
-
+              <button 
+                onClick={handlePrint}
+                className="w-24 text-[#321313] font-bold bg-[#F4991A] rounded-md p-2 md:p-2 text-center flex items-center justify-center mt-4 mr-auto"
+              >
+                Print
+              </button>
+              <Link to="/report" className="w-24 text-[#321313] font-bold bg-[#F4991A] rounded-md p-2 md:p-2 text-center flex items-center justify-center mt-4 ml-auto">
+                Report
+              </Link>
+            </div>
           </div>
         </div>
       </BackgroundAbout>

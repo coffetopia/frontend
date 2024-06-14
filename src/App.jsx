@@ -9,7 +9,7 @@ import Register from "./pages/Register";
 import Checkout from "./pages/Checkout";
 import About from "./pages/About";
 import Products from "./pages/Products";
-import AdminProduct from "./pages/Admin/AdminProduct"; // Pastikan hanya ada satu deklarasi untuk AdminProduct
+ // Pastikan hanya ada satu deklarasi untuk AdminProduct
 import AddProduct from "./pages/Admin/AddProduct";
 import UpdateProduct from "./pages/Admin/UpdateProduct";
 import UpdateCategory from "./pages/Admin/UpdateCategory";
@@ -54,7 +54,7 @@ const App = () => {
             {/* </Route> */}
 
             {/* <Route element={<RequireAuth allowedRoles={['admin']} />} > */}
-              <Route path="adminproduct" element={<AdminProduct />} />
+             
               <Route path="addproduct" element={<AddProduct />} />
               <Route path="updateproduct/:id" element={<UpdateProduct />} />
               <Route path="category/update/:id" element={<UpdateCategory />} />
