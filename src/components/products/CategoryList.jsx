@@ -28,13 +28,13 @@ export default function CategoryList({ setProducts }) {
       <div className="flex flex-col space-y-2">
         <button
           onClick={() => navigate("/addcategory")}
-          className="bg-[#F4991A] border-1 border-[#321313] p-4 rounded text-white font-bold"
+          className="bg-[#F4991A] border-1 border-[#321313] p-4 rounded text-[#321313] font-bold"
         >
           Add Category
         </button>
         <button
           onClick={() => navigate("/addproduct")}
-          className="bg-[#F4991A] border-1 border-[#321313] p-4 rounded text-white font-bold"
+          className="bg-[#F4991A] border-1 border-[#321313] p-4 rounded text-[#321313] font-bold"
         >
           Add Product
         </button>

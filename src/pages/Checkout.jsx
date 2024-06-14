@@ -185,7 +185,7 @@ const Checkout = () => {
                     htmlFor="tableNumber"
                     className="text-sm text-[#321313]"
                   >
-                    Table no :
+                    Table No :
                   </label>
                   <select
                     id="tableNumber"
