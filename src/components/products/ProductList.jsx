@@ -22,12 +22,16 @@ export default function ProductList({ products, setProducts, isAdmin }) {
       });
     } else {
       // Menambahkan atau memperbarui produk di keranjang
-      const existingProduct = cart.find(item => item.id === product.id);
+      const existingProduct = cart.find((item) => item.id === product.id);
       if (existingProduct) {
         // Perbarui jumlah produk jika sudah ada di keranjang
-        setCart(cart.map(item =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-        ));
+        setCart(
+          cart.map((item) =>
+            item.id === product.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          )
+        );
       } else {
         // Tambahkan produk baru ke keranjang
         setCart([...cart, { ...product, quantity: 1 }]);
@@ -42,8 +46,8 @@ export default function ProductList({ products, setProducts, isAdmin }) {
   };
 
   const handleCheckout = () => {
-    navigate('/checkout', { state: cart });
-  }
+    navigate("/checkout", { state: cart });
+  };
 
   return (
     <>
@@ -110,15 +114,17 @@ export default function ProductList({ products, setProducts, isAdmin }) {
           </tbody>
         </table>
       </div>
-      <div className="flex justify-end pe-10 w-[100%] my-5">
-        {/* Link ke halaman checkout */}
-        <button
-          onClick={handleCheckout}
-          className="text-base sm:text-2xl font-bold bg-[#F4991A] border border-[#321313] w-[120px] h-[40px] flex justify-center items-center"
-        >
-          Next &gt;
-        </button>
-      </div>
+      {!isAdmin && (
+        <div className="flex justify-end pe-10 w-[100%] my-5">
+          {/* Link ke halaman checkout */}
+          <button
+            onClick={handleCheckout}
+            className="text-base sm:text-2xl font-bold bg-[#F4991A] border border-[#321313] w-[120px] h-[40px] flex justify-center items-center"
+          >
+            Next &gt;
+          </button>
+        </div>
+      )}
     </>
   );
 }
