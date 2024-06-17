@@ -3,11 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import COFFEE_IMAGE from "../assets/coffe.jpg";
 import LOGO_IMAGE from "../assets/logo.png";
 import InputComponents from "../components/authentication/InputComponents";
-import axios from "../api/axios";
-import Swal from "sweetalert2";
+
+// redux
+import { useDispatch } from "react-redux";
+import { login } from "../redux/actions/authAction";
 
 export default function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -22,31 +25,15 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('/login', user);
-      localStorage.setItem('username', user.username);
-      localStorage.setItem('role', response.data.payload.role);
-      if (response.data.payload.role == 'admin') {
-        navigate('/products', { replace: true });
-      } else {
-        navigate('/', { replace: true });
-      }
-    } catch (error) {
-      console.error(error);
-      Swal.fire({
-        title: error.response.data.message,
-        text: 'username atau password salah',
-        icon: 'error',
-      });
-    }
-  }
+    dispatch(login(user, navigate));
+  };
 
   useEffect(() => {
-    if(localStorage.getItem('username')) {
-      if (localStorage.getItem('role') == 'admin') {
-        navigate('/products', { replace: true });
+    if (localStorage.getItem("username")) {
+      if (localStorage.getItem("role") == "admin") {
+        navigate("/products", { replace: true });
       } else {
-        navigate('/', { replace: true });
+        navigate("/", { replace: true });
       }
     }
   }, [navigate]);

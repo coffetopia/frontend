@@ -5,6 +5,10 @@ import { useState } from "react";
 import Navlink from "./Navlink";
 import useLogout from "../../hooks/useLogout";
 
+// redux
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../redux/actions/authAction";
+
 const Navbar = () => {
   const location = useLocation();
   const username = localStorage.getItem("username");
@@ -12,18 +16,20 @@ const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const logout = useLogout();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // Fungsi untuk membuka/menutup menu hamburger
-  const openHamburger = () => setIsNavOpen(isNavOpen => !isNavOpen);
+  const openHamburger = () => setIsNavOpen((isNavOpen) => !isNavOpen);
 
   const signOut = async () => {
     try {
+      dispatch(logoutUser());
       await logout();
-      navigate('/login', {state: {from: {pathname: '/logout'}}});
+      navigate("/login", { state: { from: { pathname: "/logout" } } });
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <div className="w-full h-[70px] p-2 flex flex-row justify-between sm:justify-start">
@@ -69,22 +75,33 @@ const Navbar = () => {
               <div className="line w-[20px] h-[2px] bg-[#e5e7eb] origin-center rotate-45"></div>
               <div className="line w-[20px] h-[2px] bg-[#e5e7eb] origin-center -rotate-45 -translate-y-2/3"></div>
             </button>
-            {role == 'admin' ? (
+            {role == "admin" ? (
               <>
-                <Navlink pathname={'/products'} text={'Products'} type={'burger'} />
-                <Navlink pathname={'/orders'} text={'Orders'} type={'burger'} />
-                <Navlink pathname={'/report'} text={'Report'} type={'burger'}  />
+                <Navlink
+                  pathname={"/products"}
+                  text={"Products"}
+                  type={"burger"}
+                />
+                <Navlink pathname={"/orders"} text={"Orders"} type={"burger"} />
+                <Navlink pathname={"/report"} text={"Report"} type={"burger"} />
               </>
             ) : (
               <>
-                <Navlink pathname={'/'} text={'Home'} type={'burger'} />
-                <Navlink pathname={'/products'} text={'Products'} type={'burger'} />
-                <Navlink pathname={'/checkout'} text={'Checkout'} type={'burger'} />
-                <Navlink pathname={'/about'} text={'About'} type={'burger'} />
+                <Navlink pathname={"/"} text={"Home"} type={"burger"} />
+                <Navlink
+                  pathname={"/products"}
+                  text={"Products"}
+                  type={"burger"}
+                />
+                <Navlink
+                  pathname={"/checkout"}
+                  text={"Checkout"}
+                  type={"burger"}
+                />
+                <Navlink pathname={"/about"} text={"About"} type={"burger"} />
               </>
             )}
-            {username
-              ?
+            {username ? (
               <div className="flex justify-center items-center font-bold h-full mt-4">
                 <NavLink to="/logout" state={{ from: location.pathname }}>
                   <div className="text-center text-xs sm:text-sm px-2 md:text-lg md:px-5 md:py-1 py-2 bg-[#F4991A] rounded-2xl mx-1 sm:mx-2">
@@ -92,7 +109,7 @@ const Navbar = () => {
                   </div>
                 </NavLink>
               </div>
-              :
+            ) : (
               <div className="flex justify-center items-center font-bold h-full mt-4">
                 <NavLink to="/login" state={{ from: location.pathname }}>
                   <div className="text-center text-xs sm:text-sm px-2 md:text-lg md:px-5 md:py-1 py-2 bg-white rounded-2xl mx-1 sm:mx-2">
@@ -105,7 +122,7 @@ const Navbar = () => {
                   </div>
                 </NavLink>
               </div>
-            }
+            )}
           </div>
         </div>
       ) : (
@@ -115,26 +132,25 @@ const Navbar = () => {
       {/* Navigasi */}
       <div className="hidden sm:flex sm:basis-2/4 sm:justify-center">
         <div className="items-center bg-[#fff] hidden text-sm sm:flex text-[#707070] md:text-lg font-medium">
-          {role == 'admin' ? (
+          {role == "admin" ? (
             <>
-              <Navlink pathname={'/products'} text={'Products'} />
-              <Navlink pathname={'/orders'} text={'Orders'} />
-              <Navlink pathname={'/report'} text={'Report'} />
+              <Navlink pathname={"/products"} text={"Products"} />
+              <Navlink pathname={"/orders"} text={"Orders"} />
+              <Navlink pathname={"/report"} text={"Report"} />
             </>
           ) : (
             <>
-              <Navlink pathname={'/'} text={"Home"} />
-              <Navlink pathname={'/products'} text={'Products'} />
-              <Navlink pathname={'/checkout'} text={'Checkout'} />
-              <Navlink pathname={'/about'} text={'About'} />
+              <Navlink pathname={"/"} text={"Home"} />
+              <Navlink pathname={"/products"} text={"Products"} />
+              <Navlink pathname={"/checkout"} text={"Checkout"} />
+              <Navlink pathname={"/about"} text={"About"} />
             </>
           )}
         </div>
       </div>
 
       {/* Tombol Autentikasi */}
-      {username
-        ?
+      {username ? (
         <div className="hidden sm:block basis-3/4 sm:basis-1/4">
           <div className="flex justify-center items-center font-bold h-full">
             <div className="icon-content relative hidden sm:flex justify-center items-center">
@@ -150,7 +166,7 @@ const Navbar = () => {
             </NavLink>
           </div>
         </div>
-        :
+      ) : (
         <div className="hidden sm:block basis-3/4 sm:basis-1/4">
           <div className="flex justify-center items-center font-bold h-full">
             <NavLink to="/login" state={{ from: location.pathname }}>
@@ -165,7 +181,7 @@ const Navbar = () => {
             </NavLink>
           </div>
         </div>
-      }
+      )}
     </div>
   );
 };

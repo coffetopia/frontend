@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 
 import COFFEE_IMAGE from "../assets/coffe.jpg";
 import LOGO_IMAGE from "../assets/logo.png";
 import InputComponents from "../components/authentication/InputComponents";
-import axios from "../api/axios";
+
+// redux
+import { useDispatch } from "react-redux";
+import { register } from "../redux/actions/authAction";
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -15,6 +17,8 @@ const Register = () => {
   }); // State untuk menyimpan username, email, dan password
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleChange = (e) => {
     setUser({
       ...user,
@@ -24,32 +28,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('/register', user); // Coba registrasi
-      if (!response.status) {
-        Swal.fire({
-          title: "Error!",
-          text: "Email atau Password Salah",
-          icon: "error",
-          confirmButtonText: "Ok",
-        }); // Menampilkan alert jika registrasi gagal
-      }
-      Swal.fire({
-        title: "Success!",
-        text: "User baru berhasil ditambahkan",
-        icon: "success",
-        confirmButtonText: "Ok",
-      }); // Menampilkan alert jika registrasi berhasil
-      navigate("/login"); // Setelah user berhasil registrasi, akan dipindahkan ke halaman login
-    } catch (error) {
-      Swal.fire({
-        title: "Error!",
-        text: "Email atau Password Salah",
-        icon: "error",
-        confirmButtonText: "Ok",
-      }); // Menampilkan alert jika registrasi gagal
-      console.error("login page", error);
-    }
+    dispatch(register(user, navigate));
   };
 
   return (

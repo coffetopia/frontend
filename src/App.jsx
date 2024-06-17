@@ -9,7 +9,7 @@ import Register from "./pages/Register";
 import Checkout from "./pages/Checkout";
 import About from "./pages/About";
 import Products from "./pages/Products";
- // Pastikan hanya ada satu deklarasi untuk AdminProduct
+// Pastikan hanya ada satu deklarasi untuk AdminProduct
 import AddProduct from "./pages/Admin/AddProduct";
 import UpdateProduct from "./pages/Admin/UpdateProduct";
 import UpdateCategory from "./pages/Admin/UpdateCategory";
@@ -20,6 +20,10 @@ import Layout from "./pages/Layout";
 import NotFound from "./pages/NotFound";
 // import RequireAuth from "./pages/RequireAuth";
 // import PresistLogin from './components/PresistLogin';
+
+// redux
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 const App = () => {
   useEffect(() => {
@@ -35,37 +39,39 @@ const App = () => {
   }, []);
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          {/* <Route element={<PresistLogin />}> */}
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            {/* <Route element={<PresistLogin />}> */}
             {/* public routes */}
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="about" element={<About />} />
             <Route path="/" element={<Home />} />
             <Route path="products" element={<Products />} />
-            
+
             {/* protect routes */}
             {/* <Route element={<RequireAuth allowedRoles={['member', 'admin']} />} > */}
-              <Route path="checkout" element={<Checkout />} />
-              <Route path="orders" element={<Orders />} />
-              <Route path="logout" element={<Logout />} />
+            <Route path="checkout" element={<Checkout />} />
+            <Route path="orders" element={<Orders />} />
+            <Route path="logout" element={<Logout />} />
             {/* </Route> */}
 
             {/* <Route element={<RequireAuth allowedRoles={['admin']} />} > */}
-             
-              <Route path="addproduct" element={<AddProduct />} />
-              <Route path="updateproduct/:id" element={<UpdateProduct />} />
-              <Route path="category/update/:id" element={<UpdateCategory />} />
-              <Route path="addcategory" element={<AddCategory />} />
-              <Route path="report" element={<Report />} />
+
+            <Route path="addproduct" element={<AddProduct />} />
+            <Route path="updateproduct/:id" element={<UpdateProduct />} />
+            <Route path="category/update/:id" element={<UpdateCategory />} />
+            <Route path="addcategory" element={<AddCategory />} />
+            <Route path="report" element={<Report />} />
             {/* </Route> */}
             <Route path="*" element={<NotFound />} />
           </Route>
-        {/* </Route> */}
-      </Routes>
-    </Router>
+          {/* </Route> */}
+        </Routes>
+      </Router>
+    </Provider>
   );
 };
 
