@@ -1,7 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
 import BackgroundAbout from "../../components/background/BackgroundAbout";
 import { useEffect, useState } from "react";
-import axios from "../../api/axios";
+import axios, { axiosPrivate } from "../../api/axios";
+import Swal from "sweetalert2";
 
 const UpdateProduct = () => {
   const navigate = useNavigate();
@@ -13,6 +14,9 @@ const UpdateProduct = () => {
     category_id: ''
   });
   const [categories, setCategories] = useState([]);
+  const [existingImage, setExistingImage] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [preview, setPreview] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,11 +25,12 @@ const UpdateProduct = () => {
         const responseCat = await axios.get('/categories');
         setCategories(responseCat.data.payload);
         setProduct(response.data.payload);
+        setExistingImage(response.data.payload.image);
       } catch (error) {
         console.error(error);
         navigate(-1);
       }
-    }
+    };
     fetchData();
   }, [id, navigate]);
 
@@ -37,13 +42,51 @@ const UpdateProduct = () => {
     }));
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+    setPreview(URL.createObjectURL(file));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+
+    for (const key in product) {
+      formData.append(key, product[key]);
+    }
+
+    if (selectedFile) {
+      formData.append("image", selectedFile);
+    }
+
     try {
-      await axios.put(`/products/${id}`, product);
-      navigate('/products');
+      const response = await axiosPrivate.put(`/products/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (!response.status) {
+        Swal.fire({
+          title: "Failed",
+          text: response.data.message,
+          icon: "error",
+        });
+      } else {
+        Swal.fire({
+          title: "Success",
+          text: response.data.message,
+          icon: "success",
+        });
+        navigate('/products');
+      }
     } catch (error) {
-      console.error('Error updating product:', error);
+      console.error(error);
+      Swal.fire({
+        title: "Failed",
+        text: error.response.data.message,
+        icon: "error",
+      });
     }
   };
 
@@ -111,7 +154,23 @@ const UpdateProduct = () => {
                 </div>
                 <div className="mb-4">
                   <label htmlFor="image" className="block text-[#321313] font-bold">Image:</label>
-                  <input type="file" id="image" className="border rounded px-2 py-1" />
+                  <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    className="border rounded px-2 py-1"
+                    onChange={handleFileChange}
+                  />
+                  {existingImage && !preview && (
+                    <div className="mt-4">
+                      <img src={existingImage} alt="Existing" className="w-20 h-20 object-cover" />
+                    </div>
+                  )}
+                  {preview && (
+                    <div className="mt-4">
+                      <img src={preview} alt="Preview" className="w-20 h-20 object-cover" />
+                    </div>
+                  )}
                 </div>
                 <div className="mb-4">
                   <button type="submit" className="w-full text-white bg-[#591E0A] font-bold rounded-md p-3 md:p-3 text-center flex items-center justify-center mb-4">

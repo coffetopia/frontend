@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate } from "react-router-dom";
-import tahuGejrot from "../../assets/tahuGejrot.png";
 import { faPencilAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import { handleDeleteProduct } from "./handleDelete";
@@ -63,7 +62,7 @@ export default function ProductList({ products, setProducts, isAdmin }) {
                 <td className="basis-1/4">
                   {/* Menampilkan gambar produk */}
                   <img
-                    src={tahuGejrot}
+                    src={product.image}
                     alt={product.name}
                     className="mx-2 w-[100px] sm:mx-10 my-5 sm:w-[130px]"
                   />

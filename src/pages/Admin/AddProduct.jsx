@@ -13,6 +13,8 @@ const AddProduct = () => {
     category_id: null,
     description: "",
   });
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [preview, setPreview] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,6 +22,12 @@ const AddProduct = () => {
       ...product,
       [name]: name === "category_id" ? parseInt(value, 10) : value,
     });
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+    setPreview(URL.createObjectURL(file));
   };
 
   useEffect(() => {
@@ -44,8 +52,22 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+
+    for (const key in product) {
+      formData.append(key, product[key]);
+    }
+
+    if (selectedFile) {
+      formData.append("image", selectedFile);
+    }
+
     try {
-      const response = await axiosPrivate.post("/product", product);
+      const response = await axiosPrivate.post("/product", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       if (!response.status) {
         Swal.fire({
           title: "Failed",
@@ -58,6 +80,7 @@ const AddProduct = () => {
           text: response.data.message,
           icon: "success",
         });
+        navigate('/products');
       }
     } catch (error) {
       console.error(error);
@@ -78,7 +101,7 @@ const AddProduct = () => {
       <BackgroundAbout>
         <div className="container py-20 px-4 sm:px-0">
           <div className="p-4">
-            <div className="p-4 bg-white border-1 border-[#321313] rounded-md mt-0">
+            <form encType="multipart/form-data" className="p-4 bg-white border-1 border-[#321313] rounded-md mt-0">
               <h3 className="text-xl text-center text-[#321313] font-bold mb-0 p-4">
                 Add Product
               </h3>
@@ -159,8 +182,15 @@ const AddProduct = () => {
                 <input
                   type="file"
                   id="image"
+                  name="image"
                   className="border rounded px-2 py-1"
+                  onChange={handleFileChange}
                 />
+                {preview && (
+                  <div className="mt-4">
+                    <img src={preview} alt="Preview" className="w-20 h-20 object-cover" />
+                  </div>
+                )}
               </div>
               <div className="mb-4">
                 <button
@@ -176,7 +206,7 @@ const AddProduct = () => {
                   Cancel
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </BackgroundAbout>
