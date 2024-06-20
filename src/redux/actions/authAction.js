@@ -32,7 +32,7 @@ export const register = (user, navigate) => async () => {
     if (!response.status) {
       Swal.fire({
         title: "Error!",
-        text: "Email atau Password Salah",
+        text: "Username dan email sudah terdaftar",
         icon: "error",
         confirmButtonText: "Ok",
       }); // Menampilkan alert jika registrasi gagal
@@ -48,7 +48,7 @@ export const register = (user, navigate) => async () => {
   } catch (error) {
     Swal.fire({
       title: "Error!",
-      text: "Email atau Password Salah",
+      text: "Username dan email sudah terdaftar",
       icon: "error",
       confirmButtonText: "Ok",
     }); // Menampilkan alert jika registrasi gagal
