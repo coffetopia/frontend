@@ -20,6 +20,7 @@ const Checkout = () => {
 
   const [tableNumber, setTableNumber] = useState(""); // State for table number
   const [diningOption, setDiningOption] = useState("");
+  const [note, setNote] = useState(""); // State for note
 
   const handleDelete = (index) => {
     if (!isConfirmed) {
@@ -195,9 +196,9 @@ const Checkout = () => {
                     required
                   >
                     <option value="">select a table number</option>
-                    <option value="1">Meja 1</option>
-                    <option value="2">Meja 2</option>
-                    <option value="3">Meja 3</option>
+                    <option value="1">Table 1</option>
+                    <option value="2">Table 2</option>
+                    <option value="3">Table 3</option>
                     {/* Tambahkan pilihan meja lainnya jika perlu */}
                   </select>
                 </div>
@@ -225,7 +226,8 @@ const Checkout = () => {
                     type="text"
                     id="catatan"
                     className="bg-white border border-[#321313] text-[#321313] text-xs rounded-md p-2 w-72"
-                    placeholder="catatan..."
+                    placeholder="note..."
+                    onChange={(e) => setNote(e.target.value)}
                     required
                   />
                 </div>
@@ -259,6 +261,9 @@ const Checkout = () => {
                 <OrderSummary
                   confirmedOrder={confirmedOrder}
                   totalPrice={totalPrice}
+                  tableNumber={tableNumber} // Pass table number to OrderSummary
+                  diningOption={diningOption} // Pass dining option to OrderSummary
+                  note={note} // Pass note to OrderSummary
                 />
               )}
 

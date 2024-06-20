@@ -62,7 +62,7 @@ const AddCategory = () => {
                 <input onChange={handleChange} name="name" type="text" id="name" placeholder="enter ur category name" className="w-full text-[#321313] py-1 md:py-2 bg-white border border-[#321313] rounded-md p-3 md:p-4 focus:border-indigo-500" />
               </div>
               <div className="mb-4">
-                <label htmlFor="description" className="block text-[#321313] font-bold">Deskripsi:</label>
+                <label htmlFor="description" className="block text-[#321313] font-bold">Description:</label>
                 <input onChange={handleChange} name="description" type="text" id="description" placeholder="enter ur category" className="w-full text-[#321313] py-1 md:py-2 bg-white border border-[#321313] rounded-md p-3 md:p-4 focus:border-indigo-500" />
               </div>
               

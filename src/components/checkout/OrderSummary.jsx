@@ -1,5 +1,6 @@
-/* eslint-disable react/prop-types */
-const OrderSummary = ({ confirmedOrder, totalPrice }) => {
+import React from "react";
+
+const OrderSummary = ({ confirmedOrder, totalPrice, tableNumber, diningOption, note }) => {
   return (
     <div className="p-4 bg-white border-1 rounded-md w-full sm:w-4/5 mt-0 border-[#321313]">
       <table className="w-full">
@@ -20,6 +21,15 @@ const OrderSummary = ({ confirmedOrder, totalPrice }) => {
           </tr>
         </tfoot>
       </table>
+      <div className="mb-2">
+        <strong>Table No: </strong>{tableNumber}
+      </div>
+      <div className="mb-2">
+        <strong>Dining Option: </strong>{diningOption}
+      </div>
+      <div className="mb-2">
+        <strong>Note: </strong>{note}
+      </div>
     </div>
   );
 };
