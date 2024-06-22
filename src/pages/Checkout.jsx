@@ -20,6 +20,7 @@ const Checkout = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [note, setNote] = useState('');
 
+
   useEffect(() => {
     let totalPrice = 0;
     cart.forEach((product) => {
@@ -152,7 +153,6 @@ const Checkout = () => {
                     <option value="1">Table 1</option>
                     <option value="2">Table 2</option>
                     <option value="3">Table 3</option>
-                    {/* Add other table options if needed */}
                   </select>
                 </div>
                 <div className="flex items-center space-x-2 mt-4">
@@ -219,7 +219,6 @@ const Checkout = () => {
                     Payment Method
                   </h3>
                   <PaymentMethod />
-
                   <div className="p-4 mt-4">
                     <button
                       type="submit"

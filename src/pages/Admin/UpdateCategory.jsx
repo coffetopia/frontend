@@ -70,7 +70,7 @@ const AddCategory = () => {
           <div className="p-4">
             <div className="p-4 bg-white border-1 border-[#321313] rounded-md mt-0">
               <h3 className="text-xl text-center text-[#321313] font-bold mb-0 p-4">
-                Add Category
+                Update Category
               </h3>
               <div className="mb-4">
                 <label
@@ -94,7 +94,7 @@ const AddCategory = () => {
                   htmlFor="description"
                   className="block text-[#321313] font-bold"
                 >
-                  Deskripsi:
+                  Description:
                 </label>
                 <textarea
                   onChange={handleChange}
@@ -109,7 +109,7 @@ const AddCategory = () => {
                   onClick={handleSubmit}
                   className="w-full text-white bg-[#591E0A] font-bold rounded-md p-3 md:p-3 text-center flex items-center justify-center mb-4"
                 >
-                  Edit Category
+                  Update Category
                 </button>
                 <button
                   onClick={handleCancel}
