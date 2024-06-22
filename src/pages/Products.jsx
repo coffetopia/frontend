@@ -1,49 +1,20 @@
-import { useState, useEffect } from "react";
-// Asset
-import axios from "../api/axios";
+import { useState, useContext, useEffect, } from "react";
 import CategoryList from "../components/products/CategoryList";
 import FavoriteProducts from "../components/products/FavoriteProducts";
 import ProductList from "../components/products/ProductList";
+import { ProductContext } from "../context/ProductContext";
+
 const Products = () => {
-  const [categories, setCategories] = useState([]);
-  const [products, setProducts] = useState([]);
+  const { categories } = useContext(ProductContext);
   const [activeComponent, setActiveComponent] = useState('');
-  const [objectCategory, setObjectCategory] = useState(null);
   const isAdmin = localStorage.getItem("role") == "admin" ? true : false;
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/categories");
-        const categories = response.data.payload;
-        setCategories(categories);
-        setActiveComponent(categories[0]?.name);
-        setObjectCategory(categories[0]);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `/products/category${objectCategory ? `/${objectCategory?.id}` : ""}`
-        );
-        const productsApi = response.data.payload;
-        setProducts(productsApi);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, [objectCategory]);
+    setActiveComponent(categories[0]?.name);
+  }, [categories]);
 
   const handleCategoryClick = (category) => {
-    setActiveComponent(category.name);
-    setObjectCategory(category);
+    setActiveComponent(category);
   };
 
   return (
@@ -52,7 +23,7 @@ const Products = () => {
       {localStorage.getItem("role") != "admin" ? (
         <FavoriteProducts />
       ) : (
-        <CategoryList setProducts={setProducts} setActiveComponent={setActiveComponent} />
+        <CategoryList />
       )}
       {/* Content Menu*/}
       <div
@@ -67,9 +38,9 @@ const Products = () => {
           {categories.map((category, index) => (
             <button
               key={index}
-              onClick={() => handleCategoryClick(category)}
+              onClick={() => handleCategoryClick(category.name)}
               className={`mx-2 text-base sm:text-lg ${
-                activeComponent == category.name
+                category.name == activeComponent
                   ? "font-medium text-primary border-b border-primary"
                   : ""
               }`}
@@ -78,7 +49,7 @@ const Products = () => {
             </button>
           ))}
         </div>
-        <ProductList products={products} setProducts={setProducts} isAdmin={isAdmin} />
+        <ProductList category={activeComponent} isAdmin={isAdmin} />
       </div>
     </div>
   );
