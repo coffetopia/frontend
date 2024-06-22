@@ -1,27 +1,15 @@
 /* eslint-disable react/prop-types */
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../api/axios";
-import { handleDeleteCategory } from "./handleDelete";
+import { UseDeleteCategory } from './handleDelete';
+import { ProductContext } from "../../context/ProductContext";
 
-export default function CategoryList({ setProducts }) {
+export default function CategoryList() {
+  const { categories } = useContext(ProductContext);
   const navigate = useNavigate();
-  const [categories, setCaategories] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/categories");
-        const categories = response.data.payload;
-        setCaategories(categories);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, []);
+  const handleDelete = UseDeleteCategory();
 
   return (
     <div className="basis-1/4 flex flex-col p-4 space-y-4">
@@ -53,7 +41,7 @@ export default function CategoryList({ setProducts }) {
               >
                 <FontAwesomeIcon icon={faPencil} />
               </button>
-              <button onClick={() => handleDeleteCategory(category, setCaategories, setProducts)} className="bg-[#F41A1A] rounded">
+              <button onClick={() => handleDelete(category)} className="bg-[#F41A1A] rounded">
                 <FontAwesomeIcon icon={faTrash} />
               </button>
             </div>
