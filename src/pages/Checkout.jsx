@@ -19,7 +19,7 @@ const Checkout = () => {
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [note, setNote] = useState('');
-
+  const [isCheckoutDisabled, setIsCheckoutDisabled] = useState(false);
 
   useEffect(() => {
     let totalPrice = 0;
@@ -49,13 +49,20 @@ const Checkout = () => {
   };
 
   const handleConfirm = () => {
-    if (tableNumber != '' && diningOption != '') {
+    if (tableNumber !== '' && diningOption !== '') {
       const totalPrice = cart.reduce((total, product) => {
         return total + parseInt(product.price) * parseInt(product.quantity);
       }, 0);
-      
+  
       setTotalPrice(totalPrice);
       setIsConfirmed(true);
+    } else {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please enter table number and dining option.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
     }
   };
 
@@ -74,6 +81,26 @@ const Checkout = () => {
     try {
       const response = await axios.post('/checkout', order);
       console.log(response);
+
+      // Menampilkan alert "Pesanan berhasil di checkout"
+      Swal.fire({
+        title: 'Success!',
+        text: 'Pesanan berhasil di checkout.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+
+      // Reset cart setelah checkout
+      setCart([]);
+      setIsConfirmed(false);
+      setTableNumber("");
+      setDiningOption("");
+      setTotalPrice(0);
+      setNote("");
+
+      // Menonaktifkan tombol Checkout
+      setIsCheckoutDisabled(true);
+
     } catch (error) {
       console.error(error);
     }
@@ -114,15 +141,15 @@ const Checkout = () => {
                         <tr key={index}>
                           <td className="p-4">{product.name}</td>
                           <td className="p-5 flex items-center">
-                            <KurangButton onClick={() => removeProductFromCart(product.id)} />
+                            {!isConfirmed && <KurangButton onClick={() => removeProductFromCart(product.id)} />}
                             {product.quantity}
-                            <TambahButton onClick={() => addProductOnCart(product.id)} />
+                            {!isConfirmed && <TambahButton onClick={() => addProductOnCart(product.id)} />}
                           </td>
                           <td className="p-4">{`IDR ${product.price.toLocaleString(
                             "id-ID"
                           )}`}</td>
                           <td className="p-4 flex justify-start items-center">
-                            <HapusButton onClick={() => handleDelete(index)} />
+                            {!isConfirmed && <HapusButton onClick={() => handleDelete(index)} />}
                           </td>
                         </tr>
                       ))
@@ -185,22 +212,26 @@ const Checkout = () => {
                 </div>
                 <div className="flex justify-between">
                   <div className="flex justify-start w-full mb-4 sm:mb-4 mt-8">
-                    <button
-                      type="submit"
-                      onClick={() => navigate('/products')}
-                      className="text-white bg-[#591E0A] hover:bg-[#693828] focus:ring-4 focus:outline-none focus:ring-[#a15941] font-bold rounded-lg text-sm w-32 sm:w-auto px-5 py-2.5 text-center"
-                    >
-                      Add Menu
-                    </button>
+                    {!isConfirmed && (
+                      <button
+                        type="submit"
+                        onClick={() => navigate('/products')}
+                        className="text-white bg-[#591E0A] hover:bg-[#693828] focus:ring-4 focus:outline-none focus:ring-[#a15941] font-bold rounded-lg text-sm w-32 sm:w-auto px-5 py-2.5 text-center"
+                      >
+                        Add Menu
+                      </button>
+                    )}
                   </div>
                   <div className="flex justify-end w-full mb-4 sm:mb-4 mt-8">
-                    <button
-                      type="submit"
-                      onClick={handleConfirm}
-                      className="text-white bg-[#F4991A] hover:bg-[#f6aa40] focus:ring-4 focus:outline-none focus:ring-[#facc8d] font-bold rounded-lg text-sm w-24 sm:w-auto px-5 py-2.5 text-center"
-                    >
-                      Confirm
-                    </button>
+                    {!isConfirmed && (
+                      <button
+                        type="submit"
+                        onClick={handleConfirm}
+                        className="text-white bg-[#F4991A] hover:bg-[#f6aa40] focus:ring-4 focus:outline-none focus:ring-[#facc8d] font-bold rounded-lg text-sm w-24 sm:w-auto px-5 py-2.5 text-center"
+                      >
+                        Confirm
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -214,6 +245,9 @@ const Checkout = () => {
                   <OrderSummary
                     confirmedOrder={cart}
                     totalPrice={totalPrice}
+                    tableNumber={tableNumber}
+                    diningOption={diningOption}
+                    note={note}
                   />
                   <h3 className="text-xl text-left text-white font-bold mb-0 p-4">
                     Payment Method
@@ -224,13 +258,13 @@ const Checkout = () => {
                       type="submit"
                       className="text-white bg-[#F4991A] hover:bg-[#f6aa40] focus:ring-4 focus:outline-none focus:ring-[#facc8d] font-bold rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
                       onClick={handleCheckout}
+                      disabled={isCheckoutDisabled} // Menambahkan disabled={isCheckoutDisabled}
                     >
                       Checkout
                     </button>
                   </div>
                 </>
               )}
-
             </div>
           </div>
         </div>
