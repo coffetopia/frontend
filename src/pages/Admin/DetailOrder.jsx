@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom"; // Import Link from react-router-dom
+import { Link, useParams } from "react-router-dom";
 import BackgroundAbout from "../../components/background/BackgroundAbout";
 import axios from "../../api/axios";
 
 const DetailOrder = () => {
-  const [orders, setOrders] = useState();
+  const [orders, setOrders] = useState(null); // Inisialisasi dengan null
   const { id } = useParams();
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(`/orders/${id}`);
+        console.log("Response from API:", response.data.payload); // Tambahkan console.log untuk debug
         setOrders(response.data.payload);
       } catch (error) {
         console.error(error);
@@ -20,12 +21,6 @@ const DetailOrder = () => {
     fetchOrders();
   }, [id]);
 
-  // Function to calculate total price and return object containing total and products list
-  // const calculateTotalPrice = () => {
-  //   const totalPrice = orders.products.reduce((total, product) => total + (product.price * product.amount), 0);
-  //   return { total: totalPrice, products: orders.products };
-  // };
-
   // Function to handle print
   const handlePrint = () => {
     window.print();
@@ -33,14 +28,24 @@ const DetailOrder = () => {
 
   const safeParseJSON = (jsonString) => {
     try {
-      const unescapedString = JSON.parse(jsonString);
-      const parsed = JSON.parse(unescapedString);
-      return Array.isArray(parsed) ? parsed : [];
+      if (typeof jsonString === "string") {
+        const trimmedString = jsonString.trim();
+        if (trimmedString.startsWith('"') && trimmedString.endsWith('"')) {
+          jsonString = JSON.parse(jsonString);
+        }
+        const parsed = JSON.parse(jsonString);
+        return Array.isArray(parsed) ? parsed : [];
+      }
+      return [];
     } catch (error) {
       console.error("Failed to parse JSON:", error);
       return [];
     }
   };
+
+  const products = safeParseJSON(orders?.products);
+
+  console.log("Products:", products); // Tambahkan console.log untuk debug produk
 
   return (
     <div className="font-poppins">
@@ -71,7 +76,7 @@ const DetailOrder = () => {
                 </tr>
               </thead>
               <tbody>
-                {safeParseJSON(orders?.products).map((product, index) => (
+                {products.map((product, index) => (
                   <tr key={index}>
                     <td className="p-4">{product.name}</td>
                     <td className="p-4 text-center">{product.quantity}</td>
@@ -96,10 +101,10 @@ const DetailOrder = () => {
             </h3>
             <table className="w-full">
               <tbody>
-                {safeParseJSON(orders?.products).map((product, index) => (
+                {products.map((product, index) => (
                   <tr key={index}>
                     <td className="p-2">{product.name}</td>
-                    <td className="p-2 text-center">{product.amount}</td>
+                    <td className="p-2 text-center">{product.quantity}</td>
                     <td className="p-2 text-right">{`IDR ${(
                       product.price * product.quantity
                     ).toLocaleString("id-ID")}`}</td>
