@@ -48,6 +48,9 @@ const AddCategory = () => {
         title: "Success",
         text: response.data.message,
         icon: "success",
+      }).then(() => {
+        navigate("/products");
+        window.location.reload();
       });
     } catch (error) {
       console.error(error);
@@ -66,7 +69,7 @@ const AddCategory = () => {
   return (
     <div className="font-poppins">
       <BackgroundAbout>
-        <div className="container py-20 px-4 sm:px-0">
+        <div className="container px-4 py-20 sm:px-0">
           <div className="p-4">
             <div className="p-4 bg-white border-1 border-[#321313] rounded-md mt-0">
               <h3 className="text-xl text-center text-[#321313] font-bold mb-0 p-4">
