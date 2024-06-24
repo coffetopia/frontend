@@ -79,8 +79,11 @@ const AddProduct = () => {
           title: "Success",
           text: response.data.message,
           icon: "success",
+        }).then(() => {
+          navigate("/products");
+          window.location.reload();
         });
-        navigate('/products');
+        navigate("/products");
       }
     } catch (error) {
       console.error(error);
@@ -99,9 +102,12 @@ const AddProduct = () => {
   return (
     <div className="font-poppins">
       <BackgroundAbout>
-        <div className="container py-20 px-4 sm:px-0">
+        <div className="container px-4 py-20 sm:px-0">
           <div className="p-4">
-            <form encType="multipart/form-data" className="p-4 bg-white border-1 border-[#321313] rounded-md mt-0">
+            <form
+              encType="multipart/form-data"
+              className="p-4 bg-white border-1 border-[#321313] rounded-md mt-0"
+            >
               <h3 className="text-xl text-center text-[#321313] font-bold mb-0 p-4">
                 Add Product
               </h3>
@@ -183,12 +189,16 @@ const AddProduct = () => {
                   type="file"
                   id="image"
                   name="image"
-                  className="border rounded px-2 py-1"
+                  className="px-2 py-1 border rounded"
                   onChange={handleFileChange}
                 />
                 {preview && (
                   <div className="mt-4">
-                    <img src={preview} alt="Preview" className="w-20 h-20 object-cover" />
+                    <img
+                      src={preview}
+                      alt="Preview"
+                      className="w-20 h-20 object-cover"
+                    />
                   </div>
                 )}
               </div>
