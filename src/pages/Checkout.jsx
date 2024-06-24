@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from "react";
 import COFFEE_IMAGE from "../assets/coffe.jpg";
 import TambahButton from "../components/buttonaction/TambahButton";
 import HapusButton from "../components/buttonaction/HapusButton";
@@ -7,24 +7,26 @@ import OrderSummary from "../components/checkout/OrderSummary";
 import PaymentMethod from "../components/checkout/PaymentMethod";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { ProductContext } from '../context/ProductContext';
-import axios from '../api/axios';
+import { ProductContext } from "../context/ProductContext";
+import axios from "../api/axios";
 
 const Checkout = () => {
-  const { cart, setCart, addProductOnCart, removeProductFromCart } = useContext(ProductContext);
+  const { cart, setCart, addProductOnCart, removeProductFromCart } =
+    useContext(ProductContext);
   const navigate = useNavigate();
 
   const [tableNumber, setTableNumber] = useState("");
   const [diningOption, setDiningOption] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [note, setNote] = useState('');
+  const [note, setNote] = useState("");
   const [isCheckoutDisabled, setIsCheckoutDisabled] = useState(false);
 
   useEffect(() => {
     let totalPrice = 0;
     cart.forEach((product) => {
-      totalPrice += parseInt(product.price, 10) * parseInt(product.quantity, 10);
+      totalPrice +=
+        parseInt(product.price, 10) * parseInt(product.quantity, 10);
     });
     setTotalPrice(totalPrice);
   }, [cart, isConfirmed]);
@@ -49,45 +51,45 @@ const Checkout = () => {
   };
 
   const handleConfirm = () => {
-    if (tableNumber !== '' && diningOption !== '') {
+    if (tableNumber !== "" && diningOption !== "") {
       const totalPrice = cart.reduce((total, product) => {
         return total + parseInt(product.price) * parseInt(product.quantity);
       }, 0);
-  
+
       setTotalPrice(totalPrice);
       setIsConfirmed(true);
     } else {
       Swal.fire({
-        title: 'Error!',
-        text: 'Please enter table number and dining option.',
-        icon: 'error',
-        confirmButtonText: 'OK'
+        title: "Error!",
+        text: "Please enter table number and dining option.",
+        icon: "error",
+        confirmButtonText: "OK",
       });
     }
   };
 
   const handleCheckout = async () => {
     const order = {
-      username: localStorage.getItem('username'),
+      username: localStorage.getItem("username"),
       order: cart,
       amount: totalPrice,
       tableNumber: parseInt(tableNumber),
       diningOption,
       note,
-    }
+    };
 
     console.log(order);
 
     try {
-      const response = await axios.post('/checkout', order);
+      const response = await axios.post("/checkout", order);
       console.log(response);
 
       // Menampilkan alert "Pesanan berhasil di checkout"
       Swal.fire({
-        title: 'Success!',
-        text: 'Pesanan berhasil di checkout.',
-        icon: 'success',
-        confirmButtonText: 'OK'
+        title: "Success!",
+        text: "Pesanan berhasil di checkout.",
+        icon: "success",
+        confirmButtonText: "OK",
       });
 
       // Reset cart setelah checkout
@@ -100,11 +102,10 @@ const Checkout = () => {
 
       // Menonaktifkan tombol Checkout
       setIsCheckoutDisabled(true);
-
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <div className="font-poppins">
@@ -141,15 +142,29 @@ const Checkout = () => {
                         <tr key={index}>
                           <td className="p-4">{product.name}</td>
                           <td className="p-5 flex items-center">
-                            {!isConfirmed && <KurangButton onClick={() => removeProductFromCart(product.id)} />}
+                            {!isConfirmed && (
+                              <KurangButton
+                                onClick={() =>
+                                  removeProductFromCart(product.id)
+                                }
+                              />
+                            )}
                             {product.quantity}
-                            {!isConfirmed && <TambahButton onClick={() => addProductOnCart(product.id)} />}
+                            {!isConfirmed && (
+                              <TambahButton
+                                onClick={() => addProductOnCart(product.id)}
+                              />
+                            )}
                           </td>
                           <td className="p-4">{`IDR ${product.price.toLocaleString(
                             "id-ID"
                           )}`}</td>
                           <td className="p-4 flex justify-start items-center">
-                            {!isConfirmed && <HapusButton onClick={() => handleDelete(index)} />}
+                            {!isConfirmed && (
+                              <HapusButton
+                                onClick={() => handleDelete(index)}
+                              />
+                            )}
                           </td>
                         </tr>
                       ))
@@ -197,8 +212,8 @@ const Checkout = () => {
                     required
                   >
                     <option value="">Select an option</option>
-                    <option value="dine-in">Dine In</option>
-                    <option value="take-away">Take Away</option>
+                    <option value="Dine-In">Dine In</option>
+                    <option value="Take-Away">Take Away</option>
                   </select>
                 </div>
                 <div className="flex flex-col space-y-2 mt-4">
@@ -215,7 +230,7 @@ const Checkout = () => {
                     {!isConfirmed && (
                       <button
                         type="submit"
-                        onClick={() => navigate('/products')}
+                        onClick={() => navigate("/products")}
                         className="text-white bg-[#591E0A] hover:bg-[#693828] focus:ring-4 focus:outline-none focus:ring-[#a15941] font-bold rounded-lg text-sm w-32 sm:w-auto px-5 py-2.5 text-center"
                       >
                         Add Menu
