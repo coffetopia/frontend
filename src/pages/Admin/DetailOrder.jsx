@@ -65,7 +65,7 @@ const DetailOrder = () => {
             </div>
             <div className="flex flex-col mb-4 font-bold text-left">
               <h3 className="text-37">Name: {orders?.user.username}</h3>
-              <h3 className="text-47">Meja no : {orders?.table_number}</h3>
+              <h3 className="text-47">Table No : {orders?.table_number}</h3>
             </div>
             <table className="w-full" id="productTable">
               <thead>

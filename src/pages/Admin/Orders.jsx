@@ -64,7 +64,7 @@ const Orders = () => {
               </div>
               <div className="flex flex-col text-left font-bold mb-4">
                 <h3 className="text-37">Name: {order.user?.username}</h3>
-                <h3 className="text-47">Meja no : {order.table_number}</h3>
+                <h3 className="text-47">Table No : {order.table_number}</h3>
               </div>
               <table className="w-full" id="productTable">
                 <thead>
