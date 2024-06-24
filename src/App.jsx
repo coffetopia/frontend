@@ -81,41 +81,41 @@
 
 // export default App;
 
-
-import { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import Login from "./pages/Login";
-import Logout from "./pages/Logout";
-import Home from "./pages/Home";
-import Register from "./pages/Register";
-import Checkout from "./pages/Checkout";
-import About from "./pages/About";
-import Products from "./pages/Products";
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import Login from './pages/Login';
+import Logout from './pages/Logout';
+import Home from './pages/Home';
+import Register from './pages/Register';
+import Checkout from './pages/Checkout';
+import About from './pages/About';
+import Products from './pages/Products';
 // Pastikan hanya ada satu deklarasi untuk AdminProduct
-import AddProduct from "./pages/Admin/AddProduct";
-import UpdateProduct from "./pages/Admin/UpdateProduct";
-import UpdateCategory from "./pages/Admin/UpdateCategory";
-import AddCategory from "./pages/Admin/AddCategory";
-import Orders from "./pages/Admin/Orders"; // Pastikan deklarasi Orders tidak tumpang tindih dengan AdminProduct
-import Report from "./pages/Admin/Report";
-import Layout from "./pages/Layout";
-import NotFound from "./pages/NotFound";
+import AddProduct from './pages/Admin/AddProduct';
+import UpdateProduct from './pages/Admin/UpdateProduct';
+import UpdateCategory from './pages/Admin/UpdateCategory';
+import AddCategory from './pages/Admin/AddCategory';
+import Orders from './pages/Admin/Orders'; // Pastikan deklarasi Orders tidak tumpang tindih dengan AdminProduct
+import Report from './pages/Admin/Report';
+import Layout from './pages/Layout';
+import NotFound from './pages/NotFound';
 // import RequireAuth from "./pages/RequireAuth";
 // import PresistLogin from './components/PresistLogin';
 
 // redux
-import { Provider } from "react-redux";
-import store from "./redux/store";
-import { ProductProvider } from "./context/ProductContext";
+import { Provider } from 'react-redux';
+import store from './redux/store';
+import { ProductProvider } from './context/ProductContext';
+import DetailOrder from './pages/Admin/DetailOrder';
 
 const App = () => {
   useEffect(() => {
     AOS.init({
       offset: 100,
       duration: 700,
-      easing: "ease-in",
+      easing: 'ease-in',
       delay: 100,
     });
   }, []);
@@ -139,6 +139,7 @@ const App = () => {
               {/* <Route element={<RequireAuth allowedRoles={['member', 'admin']} />} > */}
               {/* <Route path="checkout" element={<Checkout />} /> */}
               <Route path="orders" element={<Orders />} />
+              <Route path="orders/:id" element={<DetailOrder />} />
               <Route path="logout" element={<Logout />} />
               {/* </Route> */}
 

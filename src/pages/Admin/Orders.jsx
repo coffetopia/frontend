@@ -9,13 +9,13 @@ const Orders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = axios.get('/orders');
+        const response = axios.get("/orders");
         const data = (await response).data.payload;
         setOrders(data);
       } catch (error) {
         console.error(error);
       }
-    }
+    };
 
     fetchOrders();
   }, []);
@@ -31,12 +31,26 @@ const Orders = () => {
     window.print();
   };
 
+  const safeParseJSON = (jsonString) => {
+    try {
+      const unescapedString = JSON.parse(jsonString);
+      const parsed = JSON.parse(unescapedString);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+      console.error("Failed to parse JSON:", error);
+      return [];
+    }
+  };
+
   return (
     <div className="font-poppins">
       <BackgroundAbout>
         <div className="container py-20 px-4 sm:px-0">
-          {orders.map((order, index) => (
-            <div key={index} className="p-4 bg-white border-1 border-[#321313] rounded-md m-2 mx-auto">
+          {orders?.map((order, index) => (
+            <div
+              key={index}
+              className="p-4 bg-white border-1 border-[#321313] rounded-md m-2 mx-auto"
+            >
               <h3 className="text-2xl text-center font-bold mb-4 border-b border-gray-200">
                 Products
               </h3>
@@ -49,12 +63,8 @@ const Orders = () => {
                 </h3>
               </div>
               <div className="flex flex-col text-left font-bold mb-4">
-                <h3 className="text-37">
-                  Name: {order.user?.username}
-                </h3>
-                <h3 className="text-47">
-                  Meja no : {order.table_number}
-                </h3>
+                <h3 className="text-37">Name: {order.user?.username}</h3>
+                <h3 className="text-47">Meja no : {order.table_number}</h3>
               </div>
               <table className="w-full" id="productTable">
                 <thead>
@@ -65,7 +75,7 @@ const Orders = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {JSON.parse(order.products).map((product, index) => (
+                  {safeParseJSON(order.products).map((product, index) => (
                     <tr key={index}>
                       <td className="p-4">{product.name}</td>
                       <td className="p-4 text-center">{product.quantity}</td>
@@ -76,7 +86,7 @@ const Orders = () => {
                   ))}
                   <tr>
                     <td colSpan="3" className="p-4 text-left">
-                      <div className="mt-4"/>
+                      <div className="mt-4" />
                       <h3 className="text-1x text-left font-normal mb-4 border-2 rounded- w-44 py-1 float-right">
                         {order.note}
                       </h3>
@@ -90,19 +100,21 @@ const Orders = () => {
               </h3>
               <table className="w-full">
                 <tbody>
-                  {JSON.parse(order.products).map((product, index) => (
+                  {safeParseJSON(order.products).map((product, index) => (
                     <tr key={index}>
-                      <td className="p-2">{product.name}</td>
-                      <td className="p-2 text-center">{product.amount}</td>
-                      <td className="p-2 text-right">{`IDR ${(product.price * product.quantity).toLocaleString(
-                        "id-ID"
-                      )}`}</td>
+                      <td className="p-4">{product.name}</td>
+                      <td className="p-4 text-center">{product.quantity}</td>
+                      <td className="p-2 text-right">{`IDR ${(
+                        product.price * product.quantity
+                      ).toLocaleString("id-ID")}`}</td>
                     </tr>
                   ))}
                 </tbody>
                 <tfoot>
                   <tr className="font-bold">
-                    <td className="p-2" colSpan="2">Total</td>
+                    <td className="p-2" colSpan="2">
+                      Total
+                    </td>
                     <td className="p-2 text-right">{`IDR ${order.amount.toLocaleString(
                       "id-ID"
                     )}`}</td>
@@ -110,7 +122,7 @@ const Orders = () => {
                 </tfoot>
               </table>
 
-              <div className="border-b border-gray-200 mb-4"></div> 
+              <div className="border-b border-gray-200 mb-4"></div>
               <table className="w-full">
                 <tbody>
                   <tr className="font-bold">
@@ -120,13 +132,16 @@ const Orders = () => {
                 </tbody>
               </table>
               <div className="flex justify-center">
-                <button 
+                <button
                   onClick={handlePrint}
                   className="w-24 text-[#321313] font-bold bg-[#F4991A] rounded-md p-2 md:p-2 text-center flex items-center justify-center mt-4 mr-auto"
                 >
                   Print
                 </button>
-                <Link to="/report" className="w-24 text-[#321313] font-bold bg-[#F4991A] rounded-md p-2 md:p-2 text-center flex items-center justify-center mt-4 ml-auto">
+                <Link
+                  to="/report"
+                  className="w-24 text-[#321313] font-bold bg-[#F4991A] rounded-md p-2 md:p-2 text-center flex items-center justify-center mt-4 ml-auto"
+                >
                   Report
                 </Link>
               </div>
