@@ -71,19 +71,6 @@ export default function Login() {
               placeholder={"enter your password"}
             />
 
-            <div className="w-full flex items-center justify-between">
-              <div className="flex items-center">
-                <input type="checkbox" className="w-4 h-4 mr-2" />
-                <p className="text-xs text-[#321313] md:text-sm">
-                  {" "}
-                  Remember me{" "}
-                </p>
-              </div>
-              <p className="text-xs md:text-sm font-semibold text-[#321313] ">
-                Forgot your password ?
-              </p>
-            </div>
-
             <div className="w-full flex flex-col my-4">
               <button
                 type="submit"
