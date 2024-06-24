@@ -71,7 +71,7 @@ const DetailOrder = () => {
               <thead>
                 <tr>
                   <th className="p-4 text-left">Name</th>
-                  <th className="p-4 text-center">Amount</th>
+                  <th className="p-4 text-center">Quantity</th>
                   <th className="p-4 text-left">Price</th>
                 </tr>
               </thead>

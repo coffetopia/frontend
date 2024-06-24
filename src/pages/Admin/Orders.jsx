@@ -70,7 +70,7 @@ const Orders = () => {
                 <thead>
                   <tr>
                     <th className="text-left p-4">Name</th>
-                    <th className="text-center p-4">Amount</th>
+                    <th className="text-center p-4">Quantity</th>
                     <th className="text-left p-4">Price</th>
                   </tr>
                 </thead>
